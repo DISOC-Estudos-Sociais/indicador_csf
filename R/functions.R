@@ -1,8 +1,48 @@
+# variaveis utilizadas
+# - utilizadas pelo cadinsan:
+# VDI5008: renda habitual domiciliar per capita
+# VDI5009: faixa de renda
+# V1022: situacao do comicilio
+# V2005: condicao no domicilio
+# V2007: sexo
+# V2010: raca
+# V2009: idade
+# V40132A: ocupacao
+# SD17001: seguranca alimentar
+
+# - utilizadas para identificar o morador e o domicilio
+# V2005: condição no domicílio
+# ID_DOMICILIO: já vem automático na função, não precisa explicitar
+
+# - utilizadas para construir o perfil
+# VD4018: tipo de remuneração == 1
+# VD4016: valor do rendimento habitual no trabalho principal
+# VD4019: valor do rendimento habitual em todos os trabalhos
+# VD4020: valor do rendimento efetivo em todos os trabalhos
+# VDI4022: valor do rendimento efetivo em todos os trabalhos e outras fontes
+# V5001A2: valor do BPC
+# V5002A
+# V5002A2: valor do Bolsa Família
+# V5003A2: valor de outros programas sociais
+# V5004A2: valor da aposentadoria
+# V5005A2: valor do seguro desemprego
+# V5006A2: valor de pensão
+# V5007A2: valor de rendimentos ou aluguel
+# V5008A2: valor de outros rendimentos
+
+
 get_data <- function(){
   PNADcIBGE::get_pnadc(year = 2024,
-                       vars = c("VDI5008", "VDI5009","V1022", "V2005", "V2007", "V2010", "V2009", "V40132A", "SD17001"),
+                       vars = c("VDI5008", "VDI5009","V1022",
+                                "V2005", "V2007", "V2010",
+                                "V2009", "V40132A", "SD17001",
+                                "VD4016", "VD4018", "VD4019", "VD4020", "VDI4022",
+                                "VI5001A2", "VI5002A", "VI5002A2",
+                                "VI5003A2", "VI5004A2", "VI5005A2",
+                                "VI5006A2", "VI5007A2", "VI5008A2"),
                        topic = 4,
-                       design = FALSE)
+                       design = FALSE,
+                       labels = FALSE)
 }
 
 modify_data <- function(raw_data){
@@ -21,7 +61,6 @@ modify_data <- function(raw_data){
     filter(V2005 == "Pessoa responsável pelo domicílio") |> 
     select(-S090000)
 }
-
 
 fit_model_5009 <- function(design){
   svyglm(formula=ebia_grave~factor(V2007)+factor(V2010)+factor(flag_18)+factor(VDI5009)+factor(atividade_agricola)+factor(V1022),
