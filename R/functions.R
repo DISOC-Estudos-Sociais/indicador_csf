@@ -53,12 +53,12 @@ modify_data <- function(raw_data){
     ) |>
     ungroup() |> 
     dplyr::mutate(
-      ebia_grave = dplyr::if_else(SD17001 == "Insegurança alimentar grave", 1, 0),
-      atividade_agricola = dplyr::if_else(V40132A == "Agricultura, pecuária silvicultura, exploração florestal, pesca ou aquicultura e atividades de apoio à agricultura, pecuária, silvicultura, exploração florestal, pesca ou aquicultura.", 1, 0, missing = 0)
+      ebia_grave = dplyr::if_else(SD17001 == 4, 1, 0),
+      atividade_agricola = dplyr::if_else(V40132A == 1, 1, 0, missing = 0)
       ) |> 
     mutate(flag_18 = as.factor(flag_18),atividade_agricola = as.factor(atividade_agricola)) |> 
-    filter(UF == "Ceará") |> 
-    filter(V2005 == "Pessoa responsável pelo domicílio") |> 
+    filter(UF == 23) |> 
+    filter(V2005 == "01") |> 
     select(-S090000)
 }
 
@@ -122,7 +122,7 @@ oversample <- function(df){
            flag_18 = factor(flag_18),
            atividade_agricola = factor(atividade_agricola))
   
-  ROSE::ROSE(ebia_grave ~ factor(V2007)+factor(V2010)+flag_18+factor(VDI5009)+atividade_agricola+factor(V1022),
+  ROSE::ROSE(factor(ebia_grave) ~ factor(V2007)+factor(V2010)+flag_18+factor(VDI5009)+atividade_agricola+factor(V1022),
              data = df, p=0.5)$data
 }
 
@@ -133,7 +133,7 @@ fit_logit_oversample <- function(df){
       na.action = na.pass)
 }
 
-predict_svy <- function(model, design, cutoff = 0.8){
+predict_svy <- function(model, design, cutoff = 0.5){
   p <- as.numeric(predict(model, type = "response"))
   y <- model$y
   
@@ -142,17 +142,16 @@ predict_svy <- function(model, design, cutoff = 0.8){
   df <- data.frame(
     y = y,
     pred = pred,
-    p = p,
-    w = test_data$V1028
+    p = p
   )
 }
 
 survey_metrics <- function(df){
   
-  TP <- sum(df$w * (df$y == 1 & df$pred == 1))
-  TN <- sum(df$w * (df$y == 0 & df$pred == 0))
-  FP <- sum(df$w * (df$y == 0 & df$pred == 1))
-  FN <- sum(df$w * (df$y == 1 & df$pred == 0))
+  TP <- sum(df$y == 1 & df$pred == 1)
+  TN <- sum(df$y == 0 & df$pred == 0)
+  FP <- sum(df$y == 0 & df$pred == 1)
+  FN <- sum(df$y == 1 & df$pred == 0)
   
   accuracy <- (TP + TN) / (TP + TN + FP + FN)
   recall   <- TP / (TP + FN)
@@ -168,6 +167,30 @@ survey_metrics <- function(df){
 }
 
 evaluate_model <- function(model, design){
-  df_pred <- predict_svy(model, design)
+  df_pred <- predict_svy(model, design, 0.8)
   survey_metrics(df_pred)
+}
+
+fit_smote <- function(df){
+  rec <- recipe(ebia_grave ~ V2007 + V2010 + flag_18 + VDI5008 + atividade_agricola + V1022, data = df) |>
+    step_mutate(
+      ebia_grave         = factor(ebia_grave),
+      V2007              = factor(V2007),
+      V2010              = factor(V2010),
+      flag_18            = factor(flag_18),
+      atividade_agricola = factor(atividade_agricola),
+      V1022              = factor(V1022)
+    ) |>
+    step_smotenc(ebia_grave, over_ratio = 1, seed = 42)
+  
+  modelo <- logistic_reg() |>
+    set_engine("glm")
+  
+  wf <- workflow() |>
+    add_model(modelo) |>
+    add_recipe(rec)
+  
+  wf_fit <- wf |> fit(data = df)
+  
+  return(wf_fit)
 }

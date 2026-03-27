@@ -26,6 +26,10 @@
 # V5006A2: valor de pensão
 # V5007A2: valor de rendimentos ou aluguel
 # V5008A2: valor de outros rendimentos
+library(targets)
+library(dplyr)
+
+tar_load(raw_data)
 
 data <- raw_data |> 
   filter(UF == 23) |> 
@@ -71,6 +75,4 @@ data |>
                                       VD4019 <= 4236~1,
                                       .default = 0)) |> 
   count(fl_perfil_caduni)
-
-
 
