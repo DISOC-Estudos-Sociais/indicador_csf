@@ -1,0 +1,187 @@
+---
+title: "Previsão de INSAN Grave no Ceará"
+subtitle: "Modelos elaborados a partir de dados da PNAD Contínua 2024"
+author: "J. Victor Batista — Assessor Técnico | DISOC – IPECE"
+date: today
+date-format: "MMMM [de] YYYY"
+lang: pt-BR
+
+format: 
+  html:
+    code-fold: true
+---
+
+# Introdução
+
+# Dados
+
+## Variáveis utilizadas - Utilizadas pelo CadINSAN:
+
+Lista das variáveis originais apontadas pelo relatório
+
+::::: columns
+::: {.column width="55%"}
+-   VDI5008: renda habitual domiciliar per capita
+-   VDI5009: faixa de renda
+-   V1022: situação do domicílio
+-   V2005: condição no domicílio
+-   V2007: sexo
+:::
+
+::: {.column width="45%"}
+-   V2010: raça
+-   V2009: idade
+-   V40132A: ocupação
+-   SD17001: segurança alimentar
+:::
+:::::
+
+## Variáveis utilizadas - Utilizadas para identificar o morador e o domicílio
+
+Essas variáveis foram utilizadas para calcular as rendas domiciliares per capita ou para filtrar por chefe do domicílio quando necessário.
+
+-   V2005: condição no domicílio
+-   ID_DOMICILIO: já vem automático na função, não precisa explicitar
+
+## Variáveis utilizadas - Utilizadas para construir o perfil {.smaller}
+
+O perfil CADÚnico é construído a partir de dois critérios: a renda domiciliar menor que R\$ 4.236,00 ou renda domiciliar per capita menor que R\$ 810,50
+
+::::: columns
+::: {.column width="50%"}
+-   VD4018: tipo de remuneração == 1
+-   VD4019: valor do rendimento em todos os trabalhos
+-   V5001A2: valor do BPC
+-   V5002A: recebimento do Bolsa Família
+-   V5002A2: valor do Bolsa Família
+-   V5003A2: valor de outros programas sociais
+:::
+
+::: {.column width="50%"}
+-   V5004A2: valor da aposentadoria
+-   V5005A2: valor do seguro desemprego
+-   V5006A2: valor de pensão
+-   V5007A2: valor de rendimentos ou aluguel
+-   V5008A2: valor de outros rendimentos
+:::
+:::::
+
+## Script de limpeza
+
+```{r}
+#| label: limpeza
+#| echo: true
+
+modify_data <- function(raw_data) {
+  raw_data |>
+    dplyr::group_by(ID_DOMICILIO) |>
+    dplyr::mutate(
+      flag_18 = as.integer(any(V2009 < 18, na.rm = TRUE))
+    ) |>
+    dplyr::ungroup() |>
+    dplyr::mutate(faixa_renda = dplyr::case_when(VDI5008>=1&VDI5008<=100 ~ "de 1 a 100",
+                                                 VDI5008>100&VDI5008<=200 ~ "de 100 a 200",
+                                                 VDI5008>200&VDI5008<=240 ~ "de 200 a 240",
+                                                 VDI5008>240&VDI5008<=290 ~ "de 240 a 290",
+                                                 VDI5008>290&VDI5008<=330 ~ "de 290 a 330",
+                                                 VDI5008>330&VDI5008<=380 ~ "de 330 a 380",
+                                                 VDI5008>380&VDI5008<=600 ~ "de 380 a 600",
+                                                 VDI5008>600&VDI5008<=650 ~ "de 600 a 650",
+                                                 VDI5008>650&VDI5008<=810 ~ "de 650 a 810",
+                                                 VDI5008>810 ~ "acima de 810",
+                                                 .default = "sem renda")) |> 
+    dplyr::mutate(
+      ebia_grave         = dplyr::if_else(SD17001 == 4, 1L, 0L),
+      atividade_agricola = dplyr::if_else(V40132A == 1, 1L, 0L, missing = 0L),
+      flag_18            = factor(flag_18),
+      atividade_agricola = factor(atividade_agricola),
+      faixa_renda        = factor(faixa_renda)
+    ) |>
+    dplyr::mutate(
+      outras_fontes = rowSums(
+        across(c(VI5001A2, VI5003A2, VI5004A2, VI5005A2, VI5006A2)),
+        na.rm = TRUE
+      )
+    )  |> 
+    group_by(ID_DOMICILIO)  |> 
+    dplyr::mutate(
+      renda_dom = sum(VD4019, na.rm = TRUE),
+      outras_fontes_dom = sum(outras_fontes, na.rm = TRUE),
+      pessoas = n(),
+      renda_pc = (renda_dom + outras_fontes_dom) / pessoas
+    ) |> 
+    ungroup() |> 
+    mutate(fl_perfil_caduni = case_when(renda_pc <= 810.5 ~ 1,
+                                        #renda_dom <= 4236 ~ 1,
+                                        .default = 0)) |> 
+    dplyr::filter(UF == 23, V2005 == "01") |>
+    dplyr::select(-dplyr::any_of("S090000"))
+}
+```
+
+# Modelos com design amostral
+
+```{r}
+#| label: bibliotecas
+
+library(targets)
+library(modelsummary)
+library(knitr)
+```
+
+```{r}
+#| label: modelos svyglm
+
+tar_load(logit_faixa_renda)
+tar_load(logit_renda_continua)
+tar_load(logit_quasi)
+tar_load(probit)
+
+modelsummary(
+  list(
+    "Renda contínua" = logit_renda_continua,
+    "Faixa renda" = logit_faixa_renda,
+    "Quasibinomial" = logit_quasi,
+    "Probit" = probit), stars = T)
+```
+
+# Modelos SMOTE (com e sem design)
+
+```{r}
+#| label: modelossmote
+
+tar_load(logit_smote)
+tar_load(logit_smote_faixa)
+tar_load(logit_smote_design)
+tar_load(logit_smote_estrato)
+
+extract_if_workflow <- function(m) {
+  if (inherits(m, "workflow")) workflows::extract_fit_engine(m) else m
+}
+
+modelsummary(
+  list(
+    "SMOTE"          = extract_if_workflow(logit_smote),
+    "SMOTE Faixa"    = extract_if_workflow(logit_smote_faixa),
+    "SMOTE Design"   = extract_if_workflow(logit_smote_design),
+    "SMOTE Estrato"  = extract_if_workflow(logit_smote_estrato)
+  ),
+  stars = TRUE
+)
+```
+
+# Predições
+
+```{r}
+tar_load(metrics_comparativo)
+
+knitr::kable(metrics_comparativo)
+
+```
+
+# Conclusões
+
+- Utilizar modelos sem balanceamento via SMOTE não é viável para realizar predições. Com cutoff de 0,5, todos os modelos preveem a totalidade das observações como 0 — reflexo do severo desbalanceamento da variável resposta, cuja classe positiva (INSAN grave) representa menos de 5% da amostra.
+- Modelos de machine learning (LASSO) também não apresentaram desempenho superior sem balanceamento, com AUC de 0,586 — o mais baixo entre todos os modelos avaliados.
+- Entre os modelos com SMOTE, o logit_smote foi o que obteve melhor desempenho, com recall de 0,670 e AUC de 0,712. A maior capacidade de recuperação de verdadeiros positivos é a métrica mais relevante neste contexto, dado que o custo de um falso negativo — deixar de identificar um domicílio em INSAN grave — é substancialmente maior do que o custo de um falso positivo.
+- A incorporação de faixas de renda, estratos geográficos ou design amostral não trouxe ganhos de recall, sugerindo que a estrutura amostral complexa, embora relevante para inferência, não melhora a capacidade preditiva do modelo neste cenário.

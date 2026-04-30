@@ -1,0 +1,21 @@
+---
+title: "Faixas de renda"
+subtitle: "Dados da PNAD Contínua 2024"
+format: html
+---
+
+```{r}
+# NOT RUN {
+# simulate some data
+set.seed(12345)
+n = 1000
+x = rnorm(n)
+
+# binary outcome
+y = ifelse(pnorm(1 + 0.5*x + rnorm(n))>0.5, 1, 0)
+
+data = data.frame(y,x)
+mfx::logitmfx(formula=y~x, data=data)
+# }
+```
+
