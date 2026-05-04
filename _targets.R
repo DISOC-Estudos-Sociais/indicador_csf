@@ -51,12 +51,43 @@ list(
   tar_target(random_forest,  fit_random_forest(train_data)),
   
   # ---------------------------------------------------------------------------
+  # 3.4. MACHINE LEARNING COM SMOTE
+  # ---------------------------------------------------------------------------
+  # Dado balanceado gerado uma vez e reutilizado pelos dois modelos ML
+  tar_target(train_data_smote, make_smote_data(train_data)),
+  tar_target(lasso_smote,      fit_lasso_smote(train_data_smote)),
+  tar_target(random_forest_smote, fit_random_forest_smote(train_data_smote)),
+  
+  # ---------------------------------------------------------------------------
   # 3.5. MODELOS SMOTE (com e sem design)
   # ---------------------------------------------------------------------------
   tar_target(logit_smote,    fit_logit_smote(train_data)),
   tar_target(logit_smote_faixa,    fit_logit_smote_faixa(train_data)),
+  tar_target(logit_smote_decil,    fit_logit_smote_decil(train_data)),
   tar_target(logit_smote_estrato,    fit_logit_smote_estrato(train_data)),
   tar_target(logit_smote_design,    fit_logit_smote_design(train_data)),
+  
+  # ---------------------------------------------------------------------------
+  # 3.6. CORTES DE QUANTIS (calculados apenas no treino — evita data leakage)
+  # ---------------------------------------------------------------------------
+  tar_target(cortes_quartil_810, get_cortes_quartil_810(train_data)),
+  tar_target(cortes_decil_810, get_cortes_decil_810(train_data)),
+  tar_target(cortes_decil_ebia,  get_cortes_decil_ebia(train_data)),
+  
+  # Conjuntos de treino e teste com faixas de renda por quantis aplicadas
+  tar_target(train_data_quartil_810, apply_faixa_quartil_810(train_data, cortes_quartil_810)),
+  tar_target(train_data_decil_810, apply_faixa_decil_810(train_data, cortes_decil_810)),
+  tar_target(train_data_decil_ebia,  apply_faixa_decil_ebia(train_data,  cortes_decil_ebia)),
+  tar_target(test_data_quartil_810,  apply_faixa_quartil_810(test_data,  cortes_quartil_810)),
+  tar_target(test_data_decil_810,  apply_faixa_decil_810(test_data,  cortes_decil_810)),
+  tar_target(test_data_decil_ebia,   apply_faixa_decil_ebia(test_data,   cortes_decil_ebia)),
+  
+  # ---------------------------------------------------------------------------
+  # 3.7. MODELOS SMOTE COM FAIXAS DE RENDA POR QUANTIS
+  # ---------------------------------------------------------------------------
+  tar_target(logit_smote_quartil_810, fit_logit_smote_quartil_810(train_data)),
+  tar_target(logit_smote_decil_810, fit_logit_smote_decil_810(train_data)),
+  tar_target(logit_smote_decil_ebia,  fit_logit_smote_decil_ebia(train_data)),
   
   # ---------------------------------------------------------------------------
   # 4. PREDIÇÕES NO CONJUNTO DE TESTE
@@ -73,11 +104,17 @@ list(
   
   # Modelos ML: predições no conjunto de teste
   tar_target(pred_lasso,         predict_lasso(lasso, test_data)),
-  #tar_target(pred_random_forest, predict_random_forest(random_forest, test_data)),
+  tar_target(pred_random_forest, predict_random_forest(random_forest, test_data)),
+  tar_target(pred_lasso_smote,        predict_lasso(lasso_smote, test_data)),
+  tar_target(pred_random_forest_smote, predict_random_forest(random_forest_smote, test_data)),
   tar_target(pred_logit_smote,   predict_tidymodels(logit_smote, test_data)),
   tar_target(pred_logit_smote_faixa,   predict_tidymodels(logit_smote_faixa, test_data)),
-  tar_target(pred_logit_smote_estrato,   predict_tidymodels(logit_smote_estrato, test_data_estrato(test_data))),
+  tar_target(pred_logit_smote_decil,   predict_tidymodels(logit_smote_decil, test_data)),
+  tar_target(pred_logit_smote_estrato,   predict_tidymodels(logit_smote_estrato, test_data)),
   tar_target(pred_logit_smote_design,   predict_svyglm(logit_smote_design, test_data)),
+  tar_target(pred_logit_smote_quartil_810, predict_tidymodels(logit_smote_quartil_810, test_data_quartil_810)),
+  tar_target(pred_logit_smote_decil_810, predict_tidymodels(logit_smote_decil_810, test_data_decil_810)),
+  tar_target(pred_logit_smote_decil_ebia,  predict_tidymodels(logit_smote_decil_ebia,  test_data_decil_ebia)),
   
   # ---------------------------------------------------------------------------
   # 5. MÉTRICAS INDIVIDUAIS
@@ -87,11 +124,17 @@ list(
   tar_target(metrics_logit_quasi,          compute_metrics(pred_logit_quasi,          "logit_quasi")),
   tar_target(metrics_probit,               compute_metrics(pred_probit,               "probit")),
   tar_target(metrics_lasso,                compute_metrics(pred_lasso,                "lasso")),
-  #tar_target(metrics_random_forest,       compute_metrics(pred_random_forest,        "random_forest")),
+  tar_target(metrics_random_forest,       compute_metrics(pred_random_forest,        "random_forest")),
+  tar_target(metrics_lasso_smote,          compute_metrics(pred_lasso_smote,          "lasso_smote")),
+  tar_target(metrics_random_forest_smote,  compute_metrics(pred_random_forest_smote,  "random_forest_smote")),
   tar_target(metrics_logit_smote,          compute_metrics(pred_logit_smote,          "logit_smote")),
   tar_target(metrics_logit_smote_faixa,    compute_metrics(pred_logit_smote_faixa,    "logit_smote_faixa")),
+  tar_target(metrics_logit_smote_decil,    compute_metrics(pred_logit_smote_decil,    "logit_smote_decil")),
   tar_target(metrics_logit_smote_estrato,  compute_metrics(pred_logit_smote_estrato,  "logit_smote_estrato")),
   tar_target(metrics_logit_smote_design,   compute_metrics(pred_logit_smote_design,   "logit_smote_design")),
+  tar_target(metrics_logit_smote_quartil_810, compute_metrics(pred_logit_smote_quartil_810, "logit_smote_quartil_810")),
+  tar_target(metrics_logit_smote_decil_810, compute_metrics(pred_logit_smote_decil_810, "logit_smote_decil_810")),
+  tar_target(metrics_logit_smote_decil_ebia,  compute_metrics(pred_logit_smote_decil_ebia,  "logit_smote_decil_ebia")),
   
   # ---------------------------------------------------------------------------
   # 6. COMPARATIVO GERAL DE MÉTRICAS
@@ -104,11 +147,17 @@ list(
       metrics_logit_quasi,
       metrics_probit,
       metrics_lasso,
-      #metrics_random_forest,
+      metrics_random_forest,
+      metrics_lasso_smote,
+      metrics_random_forest_smote,
       metrics_logit_smote,
       metrics_logit_smote_faixa,
+      metrics_logit_smote_decil,
       metrics_logit_smote_estrato,
-      metrics_logit_smote_design
+      metrics_logit_smote_design,
+      metrics_logit_smote_quartil_810,
+      metrics_logit_smote_decil_810,
+      metrics_logit_smote_decil_ebia
     )
   )
 )
