@@ -1,0 +1,242 @@
+---
+title: "Cadinsan"
+subtitle: "Replicação com os dados de 2023"
+format: html
+editor_options: 
+  chunk_output_type: console
+---
+
+# Download e processamento dos dados
+
+```{r}
+library(PNADcIBGE)
+library(dplyr)
+```
+
+```{r}
+raw_data <- PNADcIBGE::read_pnadc(
+  microdata = "c:/microdados/trimestre4/PNADC_2023_trimestre4.txt",
+  input_txt = "c:/microdados/trimestre4/input_PNADC_trimestre4_20251010.txt",
+  vars  = c(
+      "VDI5008", "VDI5009", "V1022",
+      "V2005",   "V2007",   "V2010",
+      "V2009",   "V40132A", "SD17001",
+      "VD4016",  "VD4018",  "VD4019",  "VD4020", "VDI4022",
+      "VI5001A2", "VI5002A", "VI5002A2",
+      "VI5003A2", "VI5004A2", "VI5005A2",
+      "VI5006A2", "VI5007A2", "VI5008A2"
+    )
+)
+```
+
+```{r}
+data <- raw_data |> 
+   # =========================
+  # LIMPEZA E VARIÁVEIS BÁSICAS
+  # =========================
+  dplyr::mutate(
+    
+    # Raça
+    raca = dplyr::case_when(
+      V2010 %in% c(2, 4) ~ "Preta ou Parda",
+      V2010 == 1 ~ "Branca",
+      TRUE ~ "Outra"
+    ),
+    
+    regiao = dplyr::case_when(
+      UF %in% c(11, 12, 13, 14, 15, 16, 17) ~ "Norte",
+      UF %in% c(21, 22, 23, 24, 25, 26, 27, 28, 29) ~ "Nordeste",
+      UF %in% c(31, 32, 33, 35) ~ "Sudeste",
+      UF %in% c(41, 42, 43) ~ "Sul",
+      UF %in% c(50, 51, 52, 53) ~ "Centro-oeste",
+      TRUE ~ "Outra"
+    ),
+    
+    categoria = dplyr::if_else(
+      regiao %in% c("Sudeste", "Sul"), 1L, 2L
+    ),
+    
+    faixa_renda = dplyr::case_when(
+      # Categoria 1 (Sudeste e Sul)
+      categoria == 1 & VDI5008 <  200~ "Abaixo de 200",
+      categoria == 1 & VDI5008 <  350~ "De 199 a 350",
+      categoria == 1 & VDI5008 <  481~ "De 350 a 481",
+      categoria == 1 & VDI5008 <  602~ "De 481 a 602",
+      categoria == 1 & VDI5008 <  720~ "De 602 a 720",
+      categoria == 1 & VDI5008 <  840~ "De 720 a 840",
+      categoria == 1 & VDI5008 <  965~ "De 840 a 965",
+      categoria == 1 & VDI5008 < 1113~ "De 965 a 1113",
+      categoria == 1 & VDI5008 < 1285~ "De 1113 a 1285",
+      categoria == 1 & VDI5008 < 1411~ "De 1285 a 1411",
+      categoria == 1 & VDI5008 < 1486~ "De 1411 a 1486",
+      categoria == 1 & VDI5008 < 1670~ "De 1486 a 1670",
+      categoria == 1 & VDI5008 < 1885~ "De 1670 a 1885",
+      categoria == 1 & VDI5008 < 2155~ "De 1885 a 2155",
+      categoria == 1 & VDI5008 < 2515~ "De 2155 a 2515",
+      categoria == 1 & VDI5008 < 2970~ "De 2515 a 2970",
+      categoria == 1~ "Acima de 2970",
+      # Categoria 2 (demais regiões)
+      categoria == 2 & VDI5008 ==   0~ "Sem renda",
+      categoria == 2 & VDI5008 <   100~ "De 1 a 100",
+      categoria == 2 & VDI5008 <   200~ "De 100 a 200",
+      categoria == 2 & VDI5008 <   240~ "De 200 a 240",
+      categoria == 2 & VDI5008 <   290~ "De 240 a 290",
+      categoria == 2 & VDI5008 <   330~ "De 290 a 330",
+      categoria == 2 & VDI5008 <   380~ "De 330 a 380",
+      categoria == 2 & VDI5008 <   600~ "De 380 a 600",
+      categoria == 2 & VDI5008 <   650~ "De 600 a 650",
+      categoria == 2 & VDI5008 <   810~ "De 650 a 810",
+      categoria == 2~ "Acima de 810"
+    ),
+    
+    # Indicadores
+    ebia_grave = dplyr::if_else(SD17001 == 4, 1L, 0L),
+    atividade_agricola = dplyr::if_else(V40132A == 1, 1L, 0L, missing = 0L),
+    
+    # Outras fontes (individual)
+    outras_fontes = rowSums(
+      dplyr::across(c(VI5001A2, VI5003A2, VI5004A2, VI5005A2, VI5006A2)),
+      na.rm = TRUE
+    )
+  ) |>
+    
+  # =========================
+  # AGREGAÇÃO DOMICILIAR
+  # =========================
+  dplyr::group_by(ID_DOMICILIO) |>
+    dplyr::mutate(
+      flag_18 = as.integer(any(V2009 < 18, na.rm = TRUE)),
+      renda_dom = sum(VD4019, na.rm = TRUE),
+      outras_fontes_dom = sum(outras_fontes, na.rm = TRUE),
+      pessoas = dplyr::n(),
+      renda_pc = (renda_dom + outras_fontes_dom) / pessoas
+    ) |>
+    dplyr::ungroup() |> 
+    
+  # =========================
+  # VARIÁVEIS DE RENDA (NOVAS)
+  # =========================
+  dplyr::mutate(
+    fl_perfil_caduni = dplyr::if_else(VDI5008 <= 810.5, 1L, 0L)
+  ) 
+
+# =========================
+# FORMATAÇÃO FINAL
+# =========================
+
+data <- data |> dplyr::mutate(
+  ebia_grave = factor(ebia_grave),
+  V2007 = factor(V2007),
+  V1022 = factor(V1022),
+  flag_18 = factor(flag_18),
+  atividade_agricola = factor(atividade_agricola),
+  faixa_renda = factor(faixa_renda)
+  ) |>
+dplyr::filter(V2005 == "01") |> 
+dplyr::select(-dplyr::any_of("S090000"))
+
+```
+
+```{r}
+data_split <- rsample::initial_split(data, strata = ebia_grave)
+train_data <- rsample::training(data_split)
+test_data <- rsample::testing(data_split)
+```
+
+```{r}
+rec <- recipes::recipe(
+  as.formula(
+    paste(
+      "ebia_grave ~ ",
+      "regiao + V2007 + raca + flag_18 + faixa_renda + atividade_agricola + V1022 +",
+      "UPA+ID_DOMICILIO+Estrato+V1027+V1028+V1029+V1033+posest+posest_sxi +",
+      paste(sprintf("V1028%03d", seq(1:200)), collapse = "+")
+      #, "+", paste(sprintf("V1036%03d", seq(1:200)), collapse = "+")
+    )
+  ),
+  data = train_data
+  ) |>
+  themis::step_smotenc(ebia_grave, over_ratio = 1, seed = 42)
+
+df_bal <- recipes::prep(rec) |>
+  recipes::bake(new_data = NULL)
+
+```
+
+```{r}
+dadosPnadC_dom <- PNADcIBGE::pnadc_design(df_bal)
+
+fit16 <- survey::svyglm(
+  formula = ebia_grave~
+    regiao+
+    V2007+
+    raca+
+    flag_18+
+    faixa_renda+
+    atividade_agricola+
+    V1022,
+  design = dadosPnadC_dom,
+  family = "binomial",
+  na.action = na.pass)
+
+summary(fit16)
+
+mfx <- marginaleffects::avg_slopes(fit16)
+print(mfx, topn = 30)
+
+```
+
+| Dummy                   | Estimador         | Efeito marginal |
+|-------------------------|-------------------|-----------------|
+| (Intercept)             | 0.20244457        | base            |
+| Domicílio: Rural        | -0.0006146        | -0.000116       |
+| Sexo: Mulher            | 0.2091101 \*\*\*  | 0.039760        |
+| Atividade agrícola: Sim | -0.5858236 \*\*\* | -0.110685       |
+| Flag 18: 1              | -1.3013922 \*\*\* | -0.235219       |
+| Raça: Outra - Branca    | -0.4858955 .      | -0.086217       |
+| Raça: Negra - Branca    | 0.8288461 \*\*\*  | 0.161637        |
+| Região: NE - CO         | 0.1665993 \*      | 0.031149        |
+| Região: N - CO          | 0.5864067 \*\*\*  | 0.109359        |
+| Região: SE - CO         | 0.5434247         | 0.101445        |
+| Região: S-CO            | 0.6274991         | 0.116892        |
+|                         | Categoria 1       |                 |
+| Abaixo de 200           | base              | base            |
+| 199 - 350               | 0.5567021 \*\*\*  | 0.101812        |
+| 350 - 481               | -0.0917664 \*\*\* | -0.018545       |
+| 481 - 602               | -0.5187116 \*\*\* | -0.127197       |
+| 602 - 720               | -0.2642321 .      | -0.054448       |
+| 720 - 840               | -1.7276076 \*\*\* | -0.366164       |
+| 840 - 965               | -1.7610815 \*\*\* | -0.372442       |
+| 965 - 1113              | -2.2312835 \*\*\* | -0.452337       |
+| 1113 - 1285             | -2.0703232 \*\*\* | -0.426809       |
+| 1285 - 1411             | -1.4746867 \*\*\* | -0.316611       |
+| 1411 - 1486             | -2.9138167 \*\*\* | -0.538564       |
+| 1486 - 1670             | -2.3678056 \*\*\* | -0.472432       |
+| 1670 - 1885             | -2.3598994 \*\*\* | -0.471307       |
+| 1885 - 2155             | -2.9995659 \*\*\* | -0.546973       |
+| 2155 - 2515             | -3.2716823 \*\*\* | -0.570447       |
+| 2515 - 2970             | -3.5810690 \*\*\* | -0.591804       |
+| Acima de 2970           | -4.6135099 \*\*\* | -0.633372       |
+|                         | Categoria 2       |                 |
+| Sem renda               | -0.0772472        | -0.015583       |
+| 1 - 100                 | 0.2880378         | 0.055163        |
+| 100 - 200               | 0.4395065 \*\*    | 0.221872        |
+| 200 - 240               | 0.4395065         | 0.082074        |
+| 240 - 290               | 0.6776235         | 0.121147        |
+| 290 - 330               | 0.5187116         | 0.095520        |
+| 330 - 380               | 0.1993589         | 0.038711        |
+| 380 - 600               | 0.2907762         | 0.055663        |
+| 600 - 650               | -0.0887112        | -0.017920       |
+| 650 - 810               | -0.4415413        | -0.092510       |
+| Acima de 810            | -1.1741721 \*     | -0.253518       |
+
+```{r}
+pred_fit16 <- predict_svyglm(fit16, new_data = test_data, cutoff = 0.8)
+
+pred_fit16 <- pred_fit16 |> 
+  mutate(y = y-1)
+
+compute_metrics(pred_fit16)
+
+caret::confusionMatrix(data = factor(pred_fit16$pred), reference = factor(pred_fit16$y))
+```
