@@ -1,0 +1,300 @@
+---
+title: "Modelo para o Ceará"
+subtitle: "Dados de 2024 com faixas de renda a partir do salário mínimo"
+format: html
+editor_options: 
+  chunk_output_type: console
+---
+
+(0-109)
+(109 - 218)
+(218 - 405)
+(405 - 810)
+(810+)
+
+```{r}
+library(PNADcIBGE)
+library(dplyr)
+```
+
+```{r}
+raw_data <- PNADcIBGE::read_pnadc(
+  microdata = "c:/microdados/trimestre4/PNADC_2024_trimestre4.txt",
+  input_txt = "c:/microdados/trimestre4/input_PNADC_trimestre4_20251010.txt",
+  vars  = c(
+      "VDI5008", "VDI5009", "V1022",
+      "V2001", "V2005",   "V2007",   "V2010",
+      "V2009", "V40132A", "SD17001",
+      "VD3004", "VD4007",
+      "VD4016",  "VD4018",  "VD4019",  "VD4020", "VDI4022",
+      "VI5001A2", "VI5002A", "VI5002A2",
+      "VI5003A2", "VI5004A2", "VI5005A2",
+      "VI5006A2", "VI5007A2", "VI5008A2"
+    )
+)
+```
+
+```{r}
+data <- raw_data |> 
+  # =========================
+  # FILTRO INICIAL
+  # =========================
+  
+  dplyr::filter(UF == 23) |> 
+
+  # =========================
+  # LIMPEZA E VARIÁVEIS BÁSICAS
+  # =========================
+  dplyr::mutate(
+    
+    # Raça
+    raca = dplyr::case_when(
+      V2010 %in% c(2, 4) ~ "Preta ou Parda",
+      V2010 == 1 ~ "Branca",
+      TRUE ~ "Outra"
+    ),
+    
+    # Estrato simplificado
+    Estrato = stringr::str_sub(Estrato, 1, 4),
+    
+    Estrato = forcats::fct_recode(Estrato, 
+                                  "Fortaleza" = "2310",
+                                  "RMF"       = "2320",
+                                  "Litoral Ocidental e Norte do Ceará"= "2353",
+                                  "Litoral Oriental Vale do R. Jaguaribe"="2354",
+                                  "Sertões do Ceará"="2352",
+                                  "Sul do Ceará"="2351"
+    ),
+    
+    # Dummy geográfica
+    regiao_metro = dplyr::if_else(Estrato %in% c("Fortaleza", "RMF"), "RMF", "Interior"),
+    
+    faixa_renda = dplyr::case_when(
+      # VDI5008 <  109 ~ "de 0 a 109",
+      # VDI5008 <  218 ~ "de 109 a 218",
+      # VDI5008 <  353 ~ "de 218 a 353",
+      # VDI5008 <  706 ~ "de 353 a 706",
+      # TRUE ~ "Acima de 706",
+       
+      # VDI5008 <  218 ~ "de 0 a 218",
+      # VDI5008 <  235 ~ "de 218 a 235",
+      # VDI5008 <  250 ~ "de 235 a 250",
+      # VDI5008 <  300 ~ "de 250 a 300",
+      # VDI5008 <  500 ~ "de 300 a 500",
+      # TRUE ~ "Acima de 500",
+      # ),
+    
+      # VDI5008 <  218 ~ "de 0 a 218",
+      # VDI5008 <  280 ~ "de 218 a 280",
+      # VDI5008 <  392 ~ "de 280 a 392",
+      # VDI5008 <  706 ~ "de 392 a 706",
+      # TRUE ~ "Acima de 706",
+      # ),
+      
+      VDI5008 <218~ "de 0 a 218",
+      VDI5008 <333~ "de 218 a 333",
+      VDI5008 <452~ "de 333 a 452",
+      VDI5008 <564~ "de 452 a 564",
+      VDI5008 <684~ "de 564 a 684",
+      VDI5008 <750~ "de 684 a 750",
+      TRUE ~ "Acima de 750",
+      ),
+    
+    educ = dplyr::case_when(
+      VD3004 == 1 ~ "sem instrucao ou fund. inc.", 
+      VD3004 == 2 ~ "sem instrucao ou fund. inc.",
+      VD3004 == 3 ~ "fund. completo", 
+      VD3004 == 4 ~ "medio incompl.", 
+      VD3004 == 5 ~ "medio completo", 
+      VD3004 == 6 ~ "superior incompleto ou mais", 
+      VD3004 == 7 ~ "superior incompleto ou mais"
+    ),
+    
+    # Indicadores
+    ebia_grave = dplyr::if_else(SD17001 == 4, 1L, 0L),
+    atividade_agricola = dplyr::if_else(V40132A == 1, 1L, 0L, missing = 0L),
+    
+    # Outras fontes (individual)
+    outras_fontes = rowSums(
+      dplyr::across(c(VI5001A2, VI5003A2, VI5004A2, VI5005A2, VI5006A2)),
+      na.rm = TRUE
+    )
+  ) |>
+    
+  # =========================
+  # AGREGAÇÃO DOMICILIAR
+  # =========================
+  dplyr::group_by(ID_DOMICILIO) |>
+    dplyr::mutate(
+      flag_18 = as.integer(any(V2009 < 18, na.rm = TRUE)),
+      flag_14 = as.integer(any(V2009 < 14, na.rm = TRUE)),
+      renda_dom = sum(VD4019, na.rm = TRUE),
+      outras_fontes_dom = sum(outras_fontes, na.rm = TRUE),
+      pessoas = dplyr::n(),
+      renda_pc = (renda_dom + outras_fontes_dom) / pessoas,
+      agricultura_familiar = factor(any(V1022 == 2 & VD4007 %in% c(3,4), na.rm = TRUE))
+      )|>
+    dplyr::ungroup() |> 
+    
+  # =========================
+  # VARIÁVEIS DE RENDA (NOVAS)
+  # =========================
+  dplyr::mutate(
+    fl_perfil_caduni = dplyr::if_else(VDI5008 <= 706, 1L, 0L)
+  ) 
+
+# =========================
+# FORMATAÇÃO FINAL
+# =========================
+
+data <- data |> dplyr::mutate(
+  ebia_grave = factor(ebia_grave),
+  V2007 = factor(V2007),
+  V1022 = factor(V1022),
+  flag_18 = factor(flag_18),
+  flag_14 = factor(flag_14),
+  atividade_agricola = factor(atividade_agricola),
+  faixa_renda = faixa_renda,
+  educ = factor(educ)
+  ) |>
+dplyr::filter(V2005 == "01") |> 
+dplyr::select(-dplyr::any_of("S090000"))
+
+```
+
+```{r}
+set.seed(42)
+data_split <- rsample::initial_split(data, strata = ebia_grave)
+train_data <- rsample::training(data_split)
+test_data <- rsample::testing(data_split)
+```
+
+```{r}
+rec <- recipes::recipe(
+  as.formula(
+    paste(
+      "ebia_grave ~ ",
+      "V2007 + raca + flag_18+ flag_14 + educ + faixa_renda + atividade_agricola + agricultura_familiar + V1022 + regiao_metro +",
+      "UPA+ID_DOMICILIO+Estrato+V1027+V1028+V1029+V1033+posest+posest_sxi +",
+      paste(sprintf("V1028%03d", seq(1:200)), collapse = "+")
+      #, "+", paste(sprintf("V1036%03d", seq(1:200)), collapse = "+")
+    )
+  ),
+  data = train_data
+  ) |>
+  themis::step_smotenc(ebia_grave, over_ratio = 1, seed = 42)
+
+df_bal <- recipes::prep(rec) |>
+  recipes::bake(new_data = NULL)
+
+```
+
+```{r}
+dadosPnadC_dom <- PNADcIBGE::pnadc_design(df_bal)
+
+dadosPnadC_dom$variables$educ <- relevel(
+  dadosPnadC_dom$variables$educ, 
+  ref = "sem instrucao ou fund. inc."
+)
+
+dadosPnadC_dom$variables$faixa_renda <- relevel(
+  dadosPnadC_dom$variables$faixa_renda, 
+  ref = "de 0 a 218"
+)
+
+dadosPnadC_dom$variables$regiao_metro <- relevel(
+  dadosPnadC_dom$variables$regiao_metro, 
+  ref = "RMF"
+)
+
+# fit16 <- survey::svyglm(
+#   formula = ebia_grave~
+#     V2007+
+#     raca+
+#     flag_18+
+#     faixa_renda+
+#     atividade_agricola+
+#     V1022+
+#     regiao_metro+
+#     Estrato,
+#   design = dadosPnadC_dom,
+#   family = "binomial",
+#   na.action = na.pass)
+
+fit16 <- survey::svyglm(
+  formula = ebia_grave~
+    V2007+
+    raca+
+    flag_14+
+    educ+
+    faixa_renda+
+    agricultura_familiar+
+    V1022+
+    regiao_metro+
+    Estrato,
+  design = dadosPnadC_dom,
+  family = "binomial",
+  na.action = na.pass)
+
+summary(fit16)
+
+mfx <- marginaleffects::avg_slopes(fit16)
+print(mfx, topn = 30)
+
+```
+
+
+```{r}
+dadosPnadC_dom$variables |>
+  dplyr::count(faixa_renda, ebia_grave) |>
+  dplyr::group_by(faixa_renda) |>
+  dplyr::mutate(
+    perc = 100 * n / sum(n)
+  ) |>
+  dplyr::ungroup() |>
+  ggplot2::ggplot(
+    ggplot2::aes(
+      x = faixa_renda,
+      y = perc,
+      fill = factor(ebia_grave)
+    )
+  ) +
+  ggplot2::geom_col(position = "dodge") +
+  ggplot2::labs(
+    x = NULL,
+    y = "%",
+    fill = "EBIA grave"
+  ) +
+  ggplot2::theme_minimal()
+
+dadosPnadC_dom$variables |>
+  dplyr::count(faixa_renda, ebia_grave) |>
+  dplyr::group_by(faixa_renda) |>
+  dplyr::mutate(
+    perc = 100 * n / sum(n)
+  ) |>
+  dplyr::ungroup()
+
+train_data |>
+  dplyr::count(faixa_renda) |> 
+  dplyr::mutate(
+    perc = 100 * n / sum(n)
+  )
+```
+
+```{r}
+# percentis
+quantile(
+  data$VDI5008,
+  probs = seq(0, 1, 0.01),
+  na.rm = TRUE
+)
+
+# quantidade por decil
+data |>
+  dplyr::mutate(
+    decil = dplyr::ntile(VDI5008, 10)
+  ) |>
+  dplyr::count(decil)
+```
+

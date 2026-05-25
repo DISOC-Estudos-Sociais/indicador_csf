@@ -19,7 +19,7 @@ raw_data <- PNADcIBGE::read_pnadc(
   input_txt = "c:/microdados/trimestre4/input_PNADC_trimestre4_20251010.txt",
   vars  = c(
       "VDI5008", "VDI5009", "V1022",
-      "V2005",   "V2007",   "V2010",
+      "V2001", "V2005",   "V2007",   "V2010",
       "V2009",   "V40132A", "SD17001",
       "VD4016",  "VD4018",  "VD4019",  "VD4020", "VDI4022",
       "VI5001A2", "VI5002A", "VI5002A2",
