@@ -14,7 +14,10 @@ editor_options:
 
 ```{r}
 library(PNADcIBGE)
-library(dplyr)
+library(tidyverse)
+library(readr)
+library(caret)
+library(pROC)
 ```
 
 ```{r}
@@ -91,13 +94,20 @@ data <- raw_data |>
       # TRUE ~ "Acima de 706",
       # ),
       
+      # VDI5008 <218~ "de 0 a 218",
+      # VDI5008 <333~ "de 218 a 333",
+      # VDI5008 <452~ "de 333 a 452",
+      # VDI5008 <564~ "de 452 a 564",
+      # VDI5008 <684~ "de 564 a 684",
+      # VDI5008 <750~ "de 684 a 750",
+      # TRUE ~ "Acima de 750",
+      # ),
+    
       VDI5008 <218~ "de 0 a 218",
-      VDI5008 <333~ "de 218 a 333",
-      VDI5008 <452~ "de 333 a 452",
-      VDI5008 <564~ "de 452 a 564",
-      VDI5008 <684~ "de 564 a 684",
-      VDI5008 <750~ "de 684 a 750",
-      TRUE ~ "Acima de 750",
+      VDI5008 <280~ "de 218 a 280",
+      VDI5008 <380~ "de 280 a 380",
+      VDI5008 <506~ "de 380 a 506",
+      TRUE ~ "Acima de 506",
       ),
     
     educ = dplyr::case_when(
@@ -128,6 +138,7 @@ data <- raw_data |>
     dplyr::mutate(
       flag_18 = as.integer(any(V2009 < 18, na.rm = TRUE)),
       flag_14 = as.integer(any(V2009 < 14, na.rm = TRUE)),
+      flag_06 = as.integer(any(V2009 < 06, na.rm = TRUE)),
       renda_dom = sum(VD4019, na.rm = TRUE),
       outras_fontes_dom = sum(outras_fontes, na.rm = TRUE),
       pessoas = dplyr::n(),
@@ -174,7 +185,7 @@ rec <- recipes::recipe(
   as.formula(
     paste(
       "ebia_grave ~ ",
-      "V2007 + raca + flag_18+ flag_14 + educ + faixa_renda + atividade_agricola + agricultura_familiar + V1022 + regiao_metro +",
+      "V2007 + raca + flag_18+ flag_14 + flag_06  + educ + VDI5008 + faixa_renda + atividade_agricola + agricultura_familiar + V1022 + regiao_metro +",
       "UPA+ID_DOMICILIO+Estrato+V1027+V1028+V1029+V1033+posest+posest_sxi +",
       paste(sprintf("V1028%03d", seq(1:200)), collapse = "+")
       #, "+", paste(sprintf("V1036%03d", seq(1:200)), collapse = "+")
@@ -207,6 +218,21 @@ dadosPnadC_dom$variables$regiao_metro <- relevel(
   ref = "RMF"
 )
 
+dadosPnadC_dom$variables$V2007 <- relevel(
+  dadosPnadC_dom$variables$V2007, 
+  ref = "2"
+)
+
+dadosPnadC_dom$variables$raca <- relevel(
+  dadosPnadC_dom$variables$raca, 
+  ref = "Preta ou Parda"
+)
+
+dadosPnadC_dom$variables$V1022 <- relevel(
+  dadosPnadC_dom$variables$V1022, 
+  ref = "2"
+)
+
 # fit16 <- survey::svyglm(
 #   formula = ebia_grave~
 #     V2007+
@@ -221,11 +247,70 @@ dadosPnadC_dom$variables$regiao_metro <- relevel(
 #   family = "binomial",
 #   na.action = na.pass)
 
+fit01 <- survey::svyglm(
+  formula = ebia_grave~
+    V2007+
+    raca+
+    educ+
+    faixa_renda,
+  design = dadosPnadC_dom,
+  family = "binomial",
+  na.action = na.pass)
+
+fit02 <- survey::svyglm(
+  formula = ebia_grave~
+    V2007+
+    raca+
+    flag_06+
+    educ+
+    faixa_renda,
+  design = dadosPnadC_dom,
+  family = "binomial",
+  na.action = na.pass)
+
+fit03 <- survey::svyglm(
+  formula = ebia_grave~
+    V2007+
+    raca+
+    flag_06+
+    educ+
+    faixa_renda+
+    agricultura_familiar+
+    V1022, 
+  design = dadosPnadC_dom,
+  family = "binomial",
+  na.action = na.pass)
+
+fit04 <- survey::svyglm(
+  formula = ebia_grave~
+    V2007 +
+    raca + 
+    flag_18 + 
+    faixa_renda + 
+    atividade_agricola + 
+    V1022, 
+  design = dadosPnadC_dom,
+  family = "quasibinomial",
+  na.action = na.pass)
+
+fit05 <- survey::svyglm(
+  formula = ebia_grave~
+    V2007+
+    raca+
+    flag_06+
+    faixa_renda+
+    agricultura_familiar+
+    V1022+
+    Estrato, 
+  design = dadosPnadC_dom,
+  family = "binomial",
+  na.action = na.pass)
+
 fit16 <- survey::svyglm(
   formula = ebia_grave~
     V2007+
     raca+
-    flag_14+
+    flag_06+
     educ+
     faixa_renda+
     agricultura_familiar+
@@ -236,17 +321,172 @@ fit16 <- survey::svyglm(
   family = "binomial",
   na.action = na.pass)
 
-summary(fit16)
+summary(fit04)
 
 mfx <- marginaleffects::avg_slopes(fit16)
 print(mfx, topn = 30)
 
 ```
 
+```{r}
+#| label: Previsão e matriz de Confusão no test_data
+
+thrshld <- 0.5
+
+#prob_test <- predict(logit_smote_faixa, test_data, type = "prob")$.pred_1
+prob_test <- predict(fit04, test_data, type = "response")
+valid <- !is.na (prob_test) & !is.na(test_data$ebia_grave)
+
+pred_class <-  factor(ifelse(prob_test[valid]>=thrshld, 1, 0), levels = c(0,1))
+true_class <-  factor(test_data$ebia_grave[valid], levels = c(0,1))
+
+cm <- confusionMatrix(pred_class, true_class, positive = "1")
+print(cm)
+
+```
 
 ```{r}
-dadosPnadC_dom$variables |>
-  dplyr::count(faixa_renda, ebia_grave) |>
+#| label: Previsão na base do cadunico
+
+cadunico <- read_csv2("data/base_cadisan_2025.csv")
+
+cadunico <- cadunico |> 
+  mutate(
+    V2007 = factor(if_else(sexo == 1, 2, 1), levels = c(1,2)),
+    raca = factor(case_when(
+      raca1 == 1 ~ "Preta ou Parda",
+      raca2 == 1 ~ "Outra",
+      .default = "Branca"
+    )),
+    flag_06 = factor(if_else(fam_cri0a6anos == 1, 1, 0)),
+    educ = factor(case_when(
+      educ1 == 1 ~ "fund. completo", 
+      educ2 == 1 ~ "medio incompl.", 
+      educ3 == 1 ~ "medio completo", 
+      educ4 == 1 ~ "superior incompleto ou mais", 
+      .default = "sem instrucao ou fund. inc."
+    )),
+    faixa_renda = factor(case_when(
+      fx_renda01 == 1 ~ "de 0 a 218",
+      fx_renda02 == 1 ~ "de 218 a 280",
+      fx_renda03 == 1 ~ "de 280 a 380",
+      fx_renda04 == 1 ~ "de 380 a 506",
+      fx_renda05 == 1 ~ "Acima de 506",
+    )),
+    # faixa_renda = factor(case_when(
+    #   fx_renda11 == 1 ~ "de 0 a 218",
+    #   fx_renda12 == 1 ~ "de 218 a 280",
+    #   fx_renda13 == 1 ~ "de 280 a 380",
+    #   fx_renda14 == 1 ~ "de 380 a 506",
+    #   fx_renda15 == 1 ~ "Acima de 506",
+    # )),
+    agricultura_familiar = if_else(agric_fam == 1, TRUE, FALSE),
+    V1022 = factor(if_else(rural == 1, 2, 1), levels = c(1,2)),
+    regiao_metro = factor(if_else(rmf == 1, "RMF", "Interior")),
+    Estrato = factor(case_when(
+      estrato1 == 1 ~ "RMF",
+      estrato2 == 1 ~ "Sul do Ceará",
+      estrato3 == 1 ~ "Sertões do Ceará",
+      estrato4 == 1 ~ "Litoral Ocidental e Norte do Ceará",
+      estrato5 == 1 ~ "Litoral Oriental Vale do R. Jaguaribe",
+      .default = "Fortaleza"
+    )),
+  )
+
+cadunico$educ <- relevel(
+  cadunico$educ, 
+  ref = "sem instrucao ou fund. inc."
+)
+
+cadunico$faixa_renda <- relevel(
+  cadunico$faixa_renda, 
+  ref = "de 0 a 218"
+)
+
+cadunico$regiao_metro <- relevel(
+  cadunico$regiao_metro, 
+  ref = "RMF"
+)
+
+cadunico$V2007 <- relevel(
+  cadunico$V2007, 
+  ref = "2"
+)
+
+cadunico$raca <- relevel(
+  cadunico$raca, 
+  ref = "Preta ou Parda"
+)
+
+cadunico$V1022 <- relevel(
+  cadunico$V1022, 
+  ref = "2"
+)
+```
+
+```{r}
+# ------------------------------------------------------------
+# 1. Verificar as variáveis utilizadas no modelo
+# ------------------------------------------------------------
+
+formula(fit04)
+
+# Extrai os nomes das variáveis explicativas
+vars_modelo <- all.vars(formula(fit04))[-1]
+
+vars_modelo
+
+# ------------------------------------------------------------
+# 2. Conferir se todas as variáveis existem na base cadunico
+# ------------------------------------------------------------
+
+setdiff(vars_modelo, names(cadunico))
+
+# Se retornar character(0), todas as variáveis estão presentes
+
+# ------------------------------------------------------------
+# 3. Gerar a probabilidade estimada de ebia_grave
+# ------------------------------------------------------------
+
+cadunico$prob_ebia_grave <- predict(
+  fit04,
+  newdata = cadunico,
+  type = "response"
+)
+
+# ------------------------------------------------------------
+# 4. Criar classificação binária (opcional)
+# ------------------------------------------------------------
+
+# Exemplo: ponto de corte = 0.5
+cadunico$ebia_grave_pred <- ifelse(
+  cadunico$prob_ebia_grave >= 0.5,
+  1,
+  0
+)
+
+# ------------------------------------------------------------
+# 5. Inspecionar resultados
+# ------------------------------------------------------------
+
+summary(cadunico$prob_ebia_grave)
+
+table(cadunico$ebia_grave_pred)
+
+# ------------------------------------------------------------
+# 6. Exemplo de taxa estimada de EBIA grave
+# ------------------------------------------------------------
+
+mean(cadunico$ebia_grave_pred, na.rm = TRUE)
+
+# ou usando a média das probabilidades:
+mean(cadunico$prob_ebia_grave, na.rm = TRUE)
+```
+
+
+```{r}
+cadunico |>
+  dplyr::count(faixa_renda, ebia_grave_pred) |>
   dplyr::group_by(faixa_renda) |>
   dplyr::mutate(
     perc = 100 * n / sum(n)
@@ -256,7 +496,7 @@ dadosPnadC_dom$variables |>
     ggplot2::aes(
       x = faixa_renda,
       y = perc,
-      fill = factor(ebia_grave)
+      fill = factor(ebia_grave_pred)
     )
   ) +
   ggplot2::geom_col(position = "dodge") +
@@ -267,8 +507,8 @@ dadosPnadC_dom$variables |>
   ) +
   ggplot2::theme_minimal()
 
-dadosPnadC_dom$variables |>
-  dplyr::count(faixa_renda, ebia_grave) |>
+cadunico |>
+  dplyr::count(faixa_renda, ebia_grave_pred) |>
   dplyr::group_by(faixa_renda) |>
   dplyr::mutate(
     perc = 100 * n / sum(n)
@@ -296,5 +536,9 @@ data |>
     decil = dplyr::ntile(VDI5008, 10)
   ) |>
   dplyr::count(decil)
+```
+
+```{r}
+
 ```
 
