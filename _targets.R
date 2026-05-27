@@ -12,7 +12,9 @@ tar_option_set(
   format = "qs"
 )
 
-tar_source()
+#tar_source()
+purrr::walk(list.files("R", full.names = TRUE, recursive = TRUE),
+            source)
 
 # =============================================================================
 # PIPELINE
@@ -63,9 +65,11 @@ list(
   # ---------------------------------------------------------------------------
   tar_target(logit_smote,    fit_logit_smote(train_data)),
   tar_target(logit_smote_faixa,    fit_logit_smote_faixa(train_data)),
+  tar_target(modelo_5_5,  fit_5_5(train_data)),
   tar_target(logit_smote_decil,    fit_logit_smote_decil(train_data)),
   tar_target(logit_smote_estrato,    fit_logit_smote_estrato(train_data)),
   tar_target(logit_smote_design,    fit_logit_smote_design(train_data)),
+  tar_target(modelo_9_1,    fit_9_1(train_data)),
   
   # ---------------------------------------------------------------------------
   # 3.6. CORTES DE QUANTIS (calculados apenas no treino — evita data leakage)
@@ -74,10 +78,7 @@ list(
   tar_target(cortes_decil_810, get_cortes_decil_810(train_data)),
   tar_target(cortes_decil_ebia,  get_cortes_decil_ebia(train_data)),
   
-  # Conjuntos de treino e teste com faixas de renda por quantis aplicadas
-  tar_target(train_data_quartil_810, apply_faixa_quartil_810(train_data, cortes_quartil_810)),
-  tar_target(train_data_decil_810, apply_faixa_decil_810(train_data, cortes_decil_810)),
-  tar_target(train_data_decil_ebia,  apply_faixa_decil_ebia(train_data,  cortes_decil_ebia)),
+  # Conjuntos de teste com faixas de renda por quantis aplicadas
   tar_target(test_data_quartil_810,  apply_faixa_quartil_810(test_data,  cortes_quartil_810)),
   tar_target(test_data_decil_810,  apply_faixa_decil_810(test_data,  cortes_decil_810)),
   tar_target(test_data_decil_ebia,   apply_faixa_decil_ebia(test_data,   cortes_decil_ebia)),
@@ -109,9 +110,11 @@ list(
   tar_target(pred_random_forest_smote, predict_random_forest(random_forest_smote, test_data)),
   tar_target(pred_logit_smote,   predict_tidymodels(logit_smote, test_data)),
   tar_target(pred_logit_smote_faixa,   predict_tidymodels(logit_smote_faixa, test_data)),
+  tar_target(pred_5_5,   predict_tidymodels(modelo_5_5, test_data)),
   tar_target(pred_logit_smote_decil,   predict_tidymodels(logit_smote_decil, test_data)),
   tar_target(pred_logit_smote_estrato,   predict_tidymodels(logit_smote_estrato, test_data)),
   tar_target(pred_logit_smote_design,   predict_svyglm(logit_smote_design, test_data)),
+  tar_target(pred_9_1,   predict_svyglm(modelo_9_1, test_data)),
   tar_target(pred_logit_smote_quartil_810, predict_tidymodels(logit_smote_quartil_810, test_data_quartil_810)),
   tar_target(pred_logit_smote_decil_810, predict_tidymodels(logit_smote_decil_810, test_data_decil_810)),
   tar_target(pred_logit_smote_decil_ebia,  predict_tidymodels(logit_smote_decil_ebia,  test_data_decil_ebia)),
@@ -129,9 +132,11 @@ list(
   tar_target(metrics_random_forest_smote,  compute_metrics(pred_random_forest_smote,  "random_forest_smote")),
   tar_target(metrics_logit_smote,          compute_metrics(pred_logit_smote,          "logit_smote")),
   tar_target(metrics_logit_smote_faixa,    compute_metrics(pred_logit_smote_faixa,    "logit_smote_faixa")),
+  tar_target(metrics_5_5,    compute_metrics(pred_5_5,    "modelo 5.5")),
   tar_target(metrics_logit_smote_decil,    compute_metrics(pred_logit_smote_decil,    "logit_smote_decil")),
   tar_target(metrics_logit_smote_estrato,  compute_metrics(pred_logit_smote_estrato,  "logit_smote_estrato")),
   tar_target(metrics_logit_smote_design,   compute_metrics(pred_logit_smote_design,   "logit_smote_design")),
+  tar_target(metrics_9_1,   compute_metrics(pred_9_1,   "modelo 9.1")),
   tar_target(metrics_logit_smote_quartil_810, compute_metrics(pred_logit_smote_quartil_810, "logit_smote_quartil_810")),
   tar_target(metrics_logit_smote_decil_810, compute_metrics(pred_logit_smote_decil_810, "logit_smote_decil_810")),
   tar_target(metrics_logit_smote_decil_ebia,  compute_metrics(pred_logit_smote_decil_ebia,  "logit_smote_decil_ebia")),
@@ -152,9 +157,11 @@ list(
       metrics_random_forest_smote,
       metrics_logit_smote,
       metrics_logit_smote_faixa,
+      metrics_5_5,
       metrics_logit_smote_decil,
       metrics_logit_smote_estrato,
       metrics_logit_smote_design,
+      metrics_9_1,
       metrics_logit_smote_quartil_810,
       metrics_logit_smote_decil_810,
       metrics_logit_smote_decil_ebia
