@@ -45,8 +45,7 @@ predict_tidymodels <- function(model, new_data, cutoff = 0.5) {
 # recebem 0 e colunas extras sao descartadas, evitando o erro de dimensao.
 predict_lasso <- function(model, df, cutoff = 0.5) {
   x_test <- model.matrix(
-    ebia_grave ~ V2007 + raca + flag_18 +
-      decis_renda + atividade_agricola + V1022,
+    ebia_grave ~ V2007 + raca + flag_18 + decis_renda + atividade_agricola + V1022,
     data = df
   )[, -1]
   
