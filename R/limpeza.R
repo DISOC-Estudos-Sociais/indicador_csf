@@ -59,7 +59,7 @@ modify_data <- function(raw_data) {
     ),
     
     # Dummy geográfica
-    regiao_metro = dplyr::if_else(Estrato %in% c("Fortaleza", "RMF"), 1L, 0L),
+    regiao_metro = dplyr::if_else(Estrato %in% c("Fortaleza", "RMF"), "RMF", "Interior"),
     
     # Faixa de renda cadinsan 
     faixa_renda_1 = cut_renda_1(VDI5008),
@@ -68,6 +68,9 @@ modify_data <- function(raw_data) {
     faixa_renda_4 = cut_renda_4(VDI5008),
     faixa_renda_5 = cut_renda_5(VDI5008),
     faixa_renda_6 = cut_renda_6(VDI5008),
+    faixa_renda_7 = cut_renda_7(VDI5008),
+    faixa_renda_8 = cut_renda_8(VDI5008),
+    faixa_renda_9 = cut_renda_9(regiao_metro, VDI5008),
     
     # Faixa de escolaridade
     educ = dplyr::case_when(
@@ -114,16 +117,6 @@ modify_data <- function(raw_data) {
   )
   
   # =========================
-  # DECIS CONDICIONAIS
-  # =========================
-  data <- make_decis_condicional(
-    data,
-    renda_var = VDI5008,
-    grupo_var = regiao_metro,
-    cutoff = 810
-  )
-  
-  # =========================
   # FORMATAÇÃO FINAL
   # =========================
   data |> dplyr::mutate(
@@ -142,13 +135,11 @@ modify_data <- function(raw_data) {
     faixa_renda_4 = relevel(factor(faixa_renda_4), ref = "de 0 a 218"),
     faixa_renda_5 = relevel(factor(faixa_renda_5), ref = "de 0 a 218"),
     faixa_renda_6 = relevel(factor(faixa_renda_6), ref = "de 0 a 218"),
-    decis_renda = factor(
-      decis_renda,
-      levels = c(paste0("D", 1:10), "acima de 810")
-    ),
+    faixa_renda_7 = relevel(factor(faixa_renda_7), ref = "de 0 a 201"),
+    faixa_renda_8 = relevel(factor(faixa_renda_8), ref = "sem renda"),
+    faixa_renda_9 = relevel(factor(faixa_renda_9), ref = "D1"),
     regiao_metro = factor(regiao_metro, labels = c("Interior", "RMF")),
     ) |>
-    dplyr::mutate(decis_renda = forcats::fct_rev(decis_renda)) |> 
     dplyr::filter(V2005 == "01") |> 
     dplyr::select(-dplyr::any_of("S090000"))
 }
@@ -176,12 +167,16 @@ carrega_cadunico <- function(){
         .default = "sem instrucao ou fund. inc."
       )),
       VDI5008 = renda0,
+      regiao_metro = factor(dplyr::if_else(rmf == 1, "RMF", "Interior")),
       faixa_renda_1 = factor(cut_renda_1(renda0)),
       faixa_renda_2 = factor(cut_renda_2(renda0)),
       faixa_renda_3 = factor(cut_renda_3(renda0)),
       faixa_renda_4 = factor(cut_renda_4(renda0)),
       faixa_renda_5 = factor(cut_renda_5(renda0)),
       faixa_renda_6 = factor(cut_renda_6(renda0)),
+      faixa_renda_7 = factor(cut_renda_7(renda0)),
+      faixa_renda_8 = factor(cut_renda_8(renda0)),
+      faixa_renda_9 = factor(cut_renda_9(regiao_metro, renda0)),
       # faixa_renda_1 = factor(cut_renda_1(renda1)),
       # faixa_renda_2 = factor(cut_renda_2(renda2)),
       # faixa_renda_3 = factor(cut_renda_3(renda3)),
@@ -190,7 +185,6 @@ carrega_cadunico <- function(){
       # faixa_renda_6 = factor(cut_renda_6(renda6)),
       agricultura_familiar = factor(dplyr::if_else(agric_fam == 1, TRUE, FALSE)),
       V1022 = factor(dplyr::if_else(rural == 1, 2, 1), levels = c(1,2)),
-      regiao_metro = factor(dplyr::if_else(rmf == 1, "RMF", "Interior")),
       Estrato = factor(dplyr::case_when(
         estrato1 == 1 ~ "RMF",
         estrato2 == 1 ~ "Sul do Ceará",
@@ -222,15 +216,18 @@ carrega_cadunico2 <- function(){
         .default = "sem instrucao ou fund. inc."
       )),
       VDI5008 = renda1,
+      regiao_metro = factor(dplyr::if_else(rmf == 1, "RMF", "Interior")),
       faixa_renda_1 = factor(cut_renda_1(renda1)),
       faixa_renda_2 = factor(cut_renda_2(renda1)),
       faixa_renda_3 = factor(cut_renda_3(renda1)),
       faixa_renda_4 = factor(cut_renda_4(renda1)),
       faixa_renda_5 = factor(cut_renda_5(renda1)),
       faixa_renda_6 = factor(cut_renda_6(renda1)),
+      faixa_renda_7 = factor(cut_renda_7(renda1)),
+      faixa_renda_8 = factor(cut_renda_8(renda1)),
+      faixa_renda_9 = factor(cut_renda_9(regiao_metro, renda1)),
       agricultura_familiar = factor(dplyr::if_else(agric_fam == 1, TRUE, FALSE)),
       V1022 = factor(dplyr::if_else(rural == 1, 2, 1), levels = c(1,2)),
-      regiao_metro = factor(dplyr::if_else(rmf == 1, "RMF", "Interior")),
       Estrato = factor(dplyr::case_when(
         estrato1 == 1 ~ "RMF",
         estrato2 == 1 ~ "Sul do Ceará",

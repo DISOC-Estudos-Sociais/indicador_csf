@@ -79,18 +79,72 @@ cut_renda_6 <- function(x) {
   )
 }
 
+# corte 7: quartis das pessoas em ebia grave
+
+cut_renda_7 <- function(x) {
+  dplyr::case_when(
+    x <218~ "de 0 a 201",
+    x <280~ "de 201 a 358",
+    x <380~ "de 358 a 603",
+    x <506~ "de 603 a 810",
+    TRUE ~ "Acima de 810"
+  )
+}
+
+# corte 8: decis das pessoas em ebia grave
+cut_renda_8 <- function(x) {
+  dplyr::case_when(
+    x == 0 ~ "sem renda",
+    x <169~ "de 0 a 169",
+    x <239~ "de 169 a 239",
+    x <303~ "de 239 a 303",
+    x <358~ "de 303 a 358",
+    x <472~ "de 358 a 472",
+    x <592~ "de 472 a 592",
+    x <621~ "de 592 a 621",
+    x <716~ "de 621 a 716",
+    x <810~ "de 716 a 810",
+    TRUE ~ "Acima de 810"
+  )
+}
+
+# corte 9: decis condicionados à região metropolitana
+cut_renda_9 <- function(y, x) {
+  dplyr::case_when(
+    y == "Interior" & x <201 ~ "D1",
+    y == "Interior" & x <270~ "D2",
+    y == "Interior" & x <326~ "D3",
+    y == "Interior" & x <385~ "D4",
+    y == "Interior" & x <463~ "D5",
+    y == "Interior" & x <518~ "D6",
+    y == "Interior" & x <603~ "D7",
+    y == "Interior" & x <687~ "D8",
+    y == "Interior" & x <723~ "D9",
+    y == "Interior" & x <810~ "D10",
+    y == "RMF" & x == 0 ~ "D1",
+    y == "RMF" & x <207~ "D2",
+    y == "RMF" & x <309~ "D3",
+    y == "RMF" & x <401~ "D4",
+    y == "RMF" & x <487~ "D5",
+    y == "RMF" & x <589~ "D6",
+    y == "RMF" & x <650~ "D7",
+    y == "RMF" & x <706~ "D8",
+    y == "RMF" & x <727~ "D9",
+    y == "RMF" & x <810~ "D10",
+    TRUE ~ "Acima de 810"
+  )
+}
+
 # -----------------------------
 # 2. DECIS DE RENDA CONDICIONADOS POR GRUPO (E.G. REGIÃO METROPOLITANA/INTERIOR)
 # -----------------------------
-make_decis_condicional <- function(data, renda_var, grupo_var, cutoff = 810) {
+
+make_decis_condicionais <- function(data, renda_var, grupo_var, cutoff = 810) {
   
   renda_var <- rlang::ensym(renda_var)
   grupo_var <- rlang::ensym(grupo_var)
   
-  # -----------------------------
-  # 1. Calcular pontos de corte por grupo (apenas <= cutoff)
-  # -----------------------------
-  breaks_tbl <- data |>
+  data |>
     dplyr::filter(!!renda_var <= cutoff, !is.na(!!renda_var)) |>
     dplyr::group_by(!!grupo_var) |>
     dplyr::summarise(
@@ -99,161 +153,48 @@ make_decis_condicional <- function(data, renda_var, grupo_var, cutoff = 810) {
                                     na.rm = TRUE,
                                     type = 7)),
       .groups = "drop"
-    )
-  
-  # -----------------------------
-  # 2. Aplicar cortes
-  # -----------------------------
-  data |>
-    dplyr::left_join(breaks_tbl, by = rlang::as_name(grupo_var)) |>
-    dplyr::rowwise() |>
-    dplyr::mutate(
-      decis_renda = dplyr::case_when(
-        is.na(!!renda_var) ~ NA_character_,
-        
-        !!renda_var > cutoff ~ "acima de 810",
-        
-        TRUE ~ {
-          b <- breaks
-          # cut retorna 1–10
-          d <- cut(!!renda_var,
-                   breaks = unique(b),
-                   include.lowest = TRUE,
-                   labels = paste0("D", 1:10))
-          as.character(d)
-        }
-      )
     ) |>
-    dplyr::ungroup() |>
-    dplyr::select(-breaks)
+    dplyr::mutate(
+      breaks_tbl = purrr::map(breaks, ~ {
+        tibble::tibble(
+          decil    = paste0("D", 1:10),
+          lim_inf  = .x[1:10],
+          lim_sup  = .x[2:11]
+        )
+      })
+    ) |>
+    dplyr::select(-breaks) |>
+    tidyr::unnest(breaks_tbl)
 }
 
-
 # -----------------------------------------------------------------------------
-# 3. QUANTIS DE RENDA
-# -----------------------------------------------------------------------------
-# -----------------------------------------------------------------------------
-# 3.1. QUARTIS
+# 3. QUANTIS DE RENDA DE EBIA GRAVE
 # -----------------------------------------------------------------------------
 # Estratégia 1: quartis da distribuição de renda de quem tem EBIA grave, com teto em R$ 810. Gera 4 faixas (D1–D4) + categoria "acima_810". Referência no modelo: acima_810.
-make_faixa_renda_quartil_810 <- function(df) {
+make_quartil_ebia <- function(df) {
   cortes <- df |>
     dplyr::filter(ebia_grave == 1, VDI5008 <= 810) |>
     dplyr::pull(VDI5008) |>
     quantile(probs = c(0.25, 0.5, 0.75))
   
-  df |>
-    dplyr::mutate(
-      faixa_renda_q = dplyr::case_when(
-        VDI5008 > 810 ~ "acima_810",
-        TRUE ~ as.character(cut(VDI5008,
-                                breaks = c(-Inf, cortes, 810),
-                                labels = paste0("D", 1:4),
-                                include.lowest = TRUE))
-      ) |>
-        factor(levels = c("acima_810", paste0("D", 4:1)))
-    )
+  tibble::tibble(
+    quartil  = paste0("D", 1:4),
+    lim_inf  = c(0, cortes),
+    lim_sup  = c(cortes, 810)
+  )
 }
 
-# Aplica a codificação de Estrato usada em fit_logit_smote_estrato e adiciona faixa_renda_q por quartis com teto 810 — para uso no conjunto de teste sem recalcular os cortes (cortes devem vir do treino).
-apply_faixa_quartil_810 <- function(df, cortes) {
-  df |>
-    dplyr::mutate(
-      faixa_renda_q = dplyr::case_when(
-        VDI5008 > 810 ~ "acima_810",
-        TRUE ~ as.character(cut(VDI5008,
-                                breaks = c(-Inf, cortes, 810),
-                                labels = paste0("D", 1:4),
-                                include.lowest = TRUE))
-      ) |>
-        factor(levels = c("acima_810", paste0("D", 4:1)))
-    )
-}
-
-# Extrai os cortes de quantis da distribuição de renda dos domicílios com EBIA grave, para que possam ser repassados ao conjunto de teste sem vazamento de informação.
-get_cortes_quartil_810 <- function(df) {
-  df |>
-    dplyr::filter(ebia_grave == 1, VDI5008 <= 810) |>
-    dplyr::pull(VDI5008) |>
-    quantile(probs = c(0.25, 0.5, 0.75))
-}
-
-# -----------------------------------------------------------------------------
-# 3.2. DECIS
-# -----------------------------------------------------------------------------
 # Estratégia 1.
-make_faixa_renda_decil_810 <- function(df) {
+make_decil_ebia <- function(df) {
   cortes <- df |>
     dplyr::filter(ebia_grave == 1, VDI5008 <= 810) |>
     dplyr::pull(VDI5008) |>
     quantile(probs = seq(0.1, 0.9, by = 0.1))
   
-  df |>
-    dplyr::mutate(
-      faixa_renda_q = dplyr::case_when(
-        VDI5008 > 810 ~ "acima_810",
-        TRUE ~ as.character(cut(VDI5008,
-                                breaks = c(-Inf, cortes, 810),
-                                labels = paste0("D", 1:10),
-                                include.lowest = TRUE))
-      ) |>
-        factor(levels = c("acima_810", paste0("D", 10:1)))
-    )
+  tibble::tibble(
+    quartil  = paste0("D", 1:10),
+    lim_inf  = c(0, cortes),
+    lim_sup  = c(cortes, 810)
+  )
 }
 
-# Estratégia 2: decis da distribuição de renda de quem tem EBIA grave, sem restrição de teto. Gera 10 faixas (D1–D10). Referência no modelo: D10 (decil mais alto).
-make_faixa_renda_decil_ebia <- function(df) {
-  cortes <- df |>
-    dplyr::filter(ebia_grave == 1) |>
-    dplyr::pull(VDI5008) |>
-    quantile(probs = seq(0.1, 0.9, by = 0.1))
-  
-  df |>
-    dplyr::mutate(
-      faixa_renda_q = cut(VDI5008,
-                          breaks = c(-Inf, cortes, Inf),
-                          labels = paste0("D", 1:10),
-                          include.lowest = TRUE) |>
-        factor(levels = paste0("D", 10:1))
-    )
-}
-
-apply_faixa_decil_810 <- function(df, cortes) {
-  df |>
-    dplyr::mutate(
-      faixa_renda_q = dplyr::case_when(
-        VDI5008 > 810 ~ "acima_810",
-        TRUE ~ as.character(cut(VDI5008,
-                                breaks = c(-Inf, cortes, 810),
-                                labels = paste0("D", 1:10),
-                                include.lowest = TRUE))
-      ) |>
-        factor(levels = c("acima_810", paste0("D", 10:1)))
-    )
-}
-
-# Aplica faixa_renda_q por decis ao conjunto de teste, reutilizando os cortes calculados no treino.
-apply_faixa_decil_ebia <- function(df, cortes) {
-  df |>
-    dplyr::mutate(
-      faixa_renda_q = cut(VDI5008,
-                          breaks = c(-Inf, cortes, Inf),
-                          labels = paste0("D", 1:10),
-                          include.lowest = TRUE) |>
-        factor(levels = paste0("D", 10:1))
-    )
-}
-
-get_cortes_decil_810 <- function(df) {
-  df |>
-    dplyr::filter(ebia_grave == 1, VDI5008 <= 810) |>
-    dplyr::pull(VDI5008) |>
-    quantile(probs = seq(0.1, 0.9, by = 0.1))
-}
-
-get_cortes_decil_ebia <- function(df) {
-  df |>
-    dplyr::filter(ebia_grave == 1) |>
-    dplyr::pull(VDI5008) |>
-    quantile(probs = seq(0.1, 0.9, by = 0.1))
-}

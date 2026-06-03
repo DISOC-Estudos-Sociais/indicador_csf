@@ -20,10 +20,11 @@ purrr::walk(list.files("R", full.names = TRUE, recursive = TRUE), source)
 # TABELA DE VARIAÇÃO: uma linha por modelo
 # =============================================================================
 modelos_tbl <- tibble::tibble(
-  id      = 1:13,
+  id      = 1:16,
   formula = list(formula_1, formula_2, formula_3, formula_4, formula_5,
                  formula_6, formula_7, formula_8, formula_9, formula_10,
-                 formula_11, formula_12, formula_13)
+                 formula_11, formula_12, formula_13, formula_14, formula_15,
+                 formula_16)
 )
 
 # =============================================================================
@@ -44,12 +45,17 @@ list(
   tar_target(cadunico,     carrega_cadunico()),
   tar_target(cadunico2,     carrega_cadunico2()),
   
+  # Cálculo de algumas faixas de renda
+  tar_target(decis_condicionais, make_decis_condicionais(clean_data, VDI5008, regiao_metro)),
+  tar_target(quartis_ebia, make_quartil_ebia(clean_data)),
+  tar_target(decis_ebia, make_decil_ebia(clean_data)),
+  
   # ---------------------------------------------------------------------------
   # 2. RECIPES + MODELOS + PREDIÇÕES + MÉTRICAS (gerados automaticamente)
   # ---------------------------------------------------------------------------
   tar_map(
-    values = modelos_tbl,        # itera sobre as 13 linhas
-    names  = id,                 # sufixo dos targets: rec_1, mdl_1, ...
+    values = modelos_tbl,        # linhas dos modelos
+    names  = id,                 # sufixo: rec_1, mdl_1, ...
     
     tar_target(rec,   add_smote(receita(formula, train_data))),
     tar_target(mdl,   fit_glm(rec, train_data)),
@@ -65,7 +71,7 @@ list(
     compile_metrics(
       mtrcs_1,  mtrcs_2,  mtrcs_3,  mtrcs_4,  mtrcs_5,
       mtrcs_6,  mtrcs_7,  mtrcs_8,  mtrcs_9,  mtrcs_10,
-      mtrcs_11, mtrcs_12, mtrcs_13
+      mtrcs_11, mtrcs_12, mtrcs_13, mtrcs_14, mtrcs_15, mtrcs_16
     )
   ),
   
@@ -78,7 +84,7 @@ list(
          mdl_4  = mdl_4,  mdl_5  = mdl_5,  mdl_6  = mdl_6,
          mdl_7  = mdl_7,  mdl_8  = mdl_8,  mdl_9  = mdl_9,
          mdl_10 = mdl_10, mdl_11 = mdl_11, mdl_12 = mdl_12,
-         mdl_13 = mdl_13)
+         mdl_13 = mdl_13, mdl_14 = mdl_14, mdl_15 = mdl_15, mdl_16 = mdl_16)
   ),
   
   tar_target(preds_cadunico,  purrr::map(lista_modelos, prediz_cadunico, cadunico = cadunico)),
