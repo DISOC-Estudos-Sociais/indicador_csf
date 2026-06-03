@@ -2,6 +2,10 @@
 # COLETA E PRÉ-PROCESSAMENTO DOS DADOS
 # -----------------------------------------------------------------------------
 
+# -----------------------------------------------------------------------------
+# COLETA E PRÉ-PROCESSAMENTO PNAD Contínua
+# -----------------------------------------------------------------------------
+
 get_data <- function() {
   PNADcIBGE::get_pnadc(
     year  = 2024,
@@ -25,15 +29,14 @@ get_data <- function() {
 modify_data <- function(raw_data) {
   
   data <- raw_data |>
-    
     # =========================
-  # FILTRO INICIAL
-  # =========================
+    # FILTRO INICIAL
+    # =========================
   dplyr::filter(UF == 23) |>
     
     # =========================
-  # LIMPEZA E VARIÁVEIS BÁSICAS
-  # =========================
+    # LIMPEZA E VARIÁVEIS BÁSICAS
+    # =========================
   dplyr::mutate(
     
     # Raça
@@ -59,7 +62,12 @@ modify_data <- function(raw_data) {
     regiao_metro = dplyr::if_else(Estrato %in% c("Fortaleza", "RMF"), 1L, 0L),
     
     # Faixa de renda cadinsan 
-    faixa_renda = cut_renda_6(VDI5008),
+    faixa_renda_1 = cut_renda_1(VDI5008),
+    faixa_renda_2 = cut_renda_2(VDI5008),
+    faixa_renda_3 = cut_renda_3(VDI5008),
+    faixa_renda_4 = cut_renda_4(VDI5008),
+    faixa_renda_5 = cut_renda_5(VDI5008),
+    faixa_renda_6 = cut_renda_6(VDI5008),
     
     # Faixa de escolaridade
     educ = dplyr::case_when(
@@ -84,8 +92,8 @@ modify_data <- function(raw_data) {
   ) |>
     
     # =========================
-  # AGREGAÇÃO DOMICILIAR
-  # =========================
+    # AGREGAÇÃO DOMICILIAR
+    # =========================
   dplyr::group_by(ID_DOMICILIO) |>
     dplyr::mutate(
       flag_18 = as.integer(any(V2009 < 18, na.rm = TRUE)),
@@ -97,14 +105,13 @@ modify_data <- function(raw_data) {
       renda_pc = (renda_dom + outras_fontes_dom) / pessoas,
       agricultura_familiar = factor(any(V1022 == 2 & VD4007 %in% c(3,4), na.rm = TRUE))
     ) |>
-    dplyr::ungroup() |> 
-    
+    dplyr::ungroup() |>
     # =========================
-  # VARIÁVEIS DE RENDA (NOVAS)
-  # =========================
+    # VARIÁVEIS DE RENDA (NOVAS)
+    # =========================
   dplyr::mutate(
     fl_perfil_caduni = dplyr::if_else(VDI5008 <= 810.5, 1L, 0L)
-  ) 
+  )
   
   # =========================
   # DECIS CONDICIONAIS
@@ -121,23 +128,116 @@ modify_data <- function(raw_data) {
   # =========================
   data |> dplyr::mutate(
     ebia_grave = factor(ebia_grave),
-    V2007 = factor(V2007),
+    V2007 = relevel(factor(V2007), ref = 2),
+    raca = relevel(factor(raca), ref = "Preta ou Parda"),
     V1022 = factor(V1022),
     flag_18 = factor(flag_18),
+    flag_14 = factor(flag_14),
+    flag_06 = factor(flag_06),
     atividade_agricola = factor(atividade_agricola),
-    faixa_renda = factor(faixa_renda),
+    educ = relevel(factor(educ), ref = "sem instrucao ou fund. inc."),
+    faixa_renda_1 = relevel(factor(faixa_renda_1), ref = "sem renda"),
+    faixa_renda_2 = relevel(factor(faixa_renda_2), ref = "de 0 a 109"),
+    faixa_renda_3 = relevel(factor(faixa_renda_3), ref = "de 0 a 218"),
+    faixa_renda_4 = relevel(factor(faixa_renda_4), ref = "de 0 a 218"),
+    faixa_renda_5 = relevel(factor(faixa_renda_5), ref = "de 0 a 218"),
+    faixa_renda_6 = relevel(factor(faixa_renda_6), ref = "de 0 a 218"),
     decis_renda = factor(
       decis_renda,
       levels = c(paste0("D", 1:10), "acima de 810")
     ),
-    regiao_metro = factor(regiao_metro, labels = c("Interior", "Fortaleza/RMF")),
-  ) |>
+    regiao_metro = factor(regiao_metro, labels = c("Interior", "RMF")),
+    ) |>
     dplyr::mutate(decis_renda = forcats::fct_rev(decis_renda)) |> 
     dplyr::filter(V2005 == "01") |> 
-    
     dplyr::select(-dplyr::any_of("S090000"))
 }
 
-pnadc_design <- function(df) {
-  PNADcIBGE::pnadc_design(df)
+# -----------------------------------------------------------------------------
+# COLETA E PRÉ-PROCESSAMENTO Cadúnico
+# -----------------------------------------------------------------------------
+carrega_cadunico <- function(){
+  cadunico <- readr::read_csv2("data/base_cadisan_2025.csv")
+  
+  cadunico <- cadunico |> 
+    dplyr::mutate(
+      V2007 = factor(dplyr::if_else(sexo == 1, 2, 1), levels = c(1,2)),
+      raca = factor(dplyr::case_when(
+        raca1 == 1 ~ "Preta ou Parda",
+        raca2 == 1 ~ "Outra",
+        .default = "Branca"
+      )),
+      flag_06 = factor(dplyr::if_else(fam_cri0a6anos == 1, 1, 0)),
+      educ = factor(dplyr::case_when(
+        educ1 == 1 ~ "fund. completo", 
+        educ2 == 1 ~ "medio incompl.", 
+        educ3 == 1 ~ "medio completo", 
+        educ4 == 1 ~ "superior incompleto ou mais", 
+        .default = "sem instrucao ou fund. inc."
+      )),
+      VDI5008 = renda0,
+      faixa_renda_1 = factor(cut_renda_1(renda0)),
+      faixa_renda_2 = factor(cut_renda_2(renda0)),
+      faixa_renda_3 = factor(cut_renda_3(renda0)),
+      faixa_renda_4 = factor(cut_renda_4(renda0)),
+      faixa_renda_5 = factor(cut_renda_5(renda0)),
+      faixa_renda_6 = factor(cut_renda_6(renda0)),
+      # faixa_renda_1 = factor(cut_renda_1(renda1)),
+      # faixa_renda_2 = factor(cut_renda_2(renda2)),
+      # faixa_renda_3 = factor(cut_renda_3(renda3)),
+      # faixa_renda_4 = factor(cut_renda_4(renda4)),
+      # faixa_renda_5 = factor(cut_renda_5(renda5)),
+      # faixa_renda_6 = factor(cut_renda_6(renda6)),
+      agricultura_familiar = factor(dplyr::if_else(agric_fam == 1, TRUE, FALSE)),
+      V1022 = factor(dplyr::if_else(rural == 1, 2, 1), levels = c(1,2)),
+      regiao_metro = factor(dplyr::if_else(rmf == 1, "RMF", "Interior")),
+      Estrato = factor(dplyr::case_when(
+        estrato1 == 1 ~ "RMF",
+        estrato2 == 1 ~ "Sul do Ceará",
+        estrato3 == 1 ~ "Sertões do Ceará",
+        estrato4 == 1 ~ "Litoral Ocidental e Norte do Ceará",
+        estrato5 == 1 ~ "Litoral Oriental Vale do R. Jaguaribe",
+        .default = "Fortaleza"
+      )),
+    )
+}
+
+carrega_cadunico2 <- function(){
+  cadunico <- readr::read_csv2("data/base_cadisan_2025.csv")
+  
+  cadunico <- cadunico |> 
+    dplyr::mutate(
+      V2007 = factor(dplyr::if_else(sexo == 1, 2, 1), levels = c(1,2)),
+      raca = factor(dplyr::case_when(
+        raca1 == 1 ~ "Preta ou Parda",
+        raca2 == 1 ~ "Outra",
+        .default = "Branca"
+      )),
+      flag_06 = factor(dplyr::if_else(fam_cri0a6anos == 1, 1, 0)),
+      educ = factor(dplyr::case_when(
+        educ1 == 1 ~ "fund. completo", 
+        educ2 == 1 ~ "medio incompl.", 
+        educ3 == 1 ~ "medio completo", 
+        educ4 == 1 ~ "superior incompleto ou mais", 
+        .default = "sem instrucao ou fund. inc."
+      )),
+      VDI5008 = renda1,
+      faixa_renda_1 = factor(cut_renda_1(renda1)),
+      faixa_renda_2 = factor(cut_renda_2(renda1)),
+      faixa_renda_3 = factor(cut_renda_3(renda1)),
+      faixa_renda_4 = factor(cut_renda_4(renda1)),
+      faixa_renda_5 = factor(cut_renda_5(renda1)),
+      faixa_renda_6 = factor(cut_renda_6(renda1)),
+      agricultura_familiar = factor(dplyr::if_else(agric_fam == 1, TRUE, FALSE)),
+      V1022 = factor(dplyr::if_else(rural == 1, 2, 1), levels = c(1,2)),
+      regiao_metro = factor(dplyr::if_else(rmf == 1, "RMF", "Interior")),
+      Estrato = factor(dplyr::case_when(
+        estrato1 == 1 ~ "RMF",
+        estrato2 == 1 ~ "Sul do Ceará",
+        estrato3 == 1 ~ "Sertões do Ceará",
+        estrato4 == 1 ~ "Litoral Ocidental e Norte do Ceará",
+        estrato5 == 1 ~ "Litoral Oriental Vale do R. Jaguaribe",
+        .default = "Fortaleza"
+      )),
+    )
 }

@@ -1,45 +1,51 @@
-rec_base_vdi5008 <- function(df) {
-  recipes::recipe(
-    ebia_grave ~ V2007 + raca + flag_18 + VDI5008 + atividade_agricola + V1022,
-    data = df
-  )
+# -----------------------------------------------------------------------------
+# 1. FÓRMULAS
+# -----------------------------------------------------------------------------
+formula_1 <- ebia_grave ~ VDI5008
+formula_2 <- ebia_grave ~ VDI5008+V2007+raca+flag_06
+formula_3 <- ebia_grave ~ VDI5008+V2007+raca+flag_06
+formula_4 <- ebia_grave ~ VDI5008+V2007+raca+flag_06
+formula_5 <- ebia_grave ~ VDI5008+V2007+raca+flag_06+V1022
+formula_5 <- ebia_grave ~ VDI5008+V2007+raca+flag_06+V1022+agricultura_familiar
+formula_6 <- ebia_grave ~ VDI5008+V2007+raca+flag_06+V1022+agricultura_familiar+regiao_metro
+formula_7 <- ebia_grave ~ VDI5008+V2007+raca+flag_06+V1022+agricultura_familiar+regiao_metro+Estrato
+
+
+formula_8 <- ebia_grave ~ faixa_renda_1+V2007+raca+flag_06+educ+V1022+agricultura_familiar+regiao_metro+Estrato
+formula_9 <- ebia_grave ~ faixa_renda_2+V2007+raca+flag_06+educ+V1022+agricultura_familiar+regiao_metro+Estrato
+formula_10 <- ebia_grave ~ faixa_renda_3+V2007+raca+flag_06+educ+V1022+agricultura_familiar+regiao_metro+Estrato
+formula_11 <- ebia_grave ~ faixa_renda_4+V2007+raca+flag_06+educ+V1022+agricultura_familiar+regiao_metro+Estrato
+formula_12 <- ebia_grave ~ faixa_renda_5+V2007+raca+flag_06+educ+V1022+agricultura_familiar+regiao_metro+Estrato
+formula_13 <- ebia_grave ~ faixa_renda_6+V2007+raca+flag_06+educ+V1022+agricultura_familiar+regiao_metro+Estrato
+
+# -----------------------------------------------------------------------------
+# 2. COLUNAS DE DESIGN AMOSTRAL
+# -----------------------------------------------------------------------------
+
+# Colunas de design — também definidas uma vez
+svy_cols <- function() {
+  c("UPA", "ID_DOMICILIO", "Estrato",
+    "V1027", "V1028", "V1029", "V1033",
+    "posest", "posest_sxi",
+    sprintf("V1028%03d", 1:200))
 }
 
-rec_base_faixa_renda <- function(df) {
-  recipes::recipe(
-    ebia_grave ~ V2007 + raca + flag_18 + faixa_renda + atividade_agricola + V1022,
-    data = df
-  )
+# Helper que estende QUALQUER fórmula com as variáveis de design
+extend_with_svy <- function(formula) {
+  as.formula(paste(
+    deparse(formula[[2]]), "~",
+    deparse(formula[[3]]), "+",
+    paste(svy_cols(), collapse = " + ")
+  ))
 }
 
-rec_cadunico <- function(df) {
-  recipes::recipe(
-    ebia_grave ~ V2007 + raca + flag_06 + faixa_renda + agricultura_familiar + V1022,
-    data = df
-  )
-}
-
-rec_decis_renda <- function(df) {
-  recipes::recipe(
-    ebia_grave ~ V2007 + raca + flag_18 + decis_renda + atividade_agricola + V1022,
-    data = df
-  )
-}
-
-rec_decis_estrato <- function(df) {
-  recipes::recipe(
-    ebia_grave ~ V2007 + raca + flag_18 + decis_renda + atividade_agricola + V1022 + Estrato,
-    data = df
-  )
-}
-
-rec_faixa_q_estrato <- function(df) {
-  recipes::recipe(
-    ebia_grave ~ V2007 + raca + flag_18 + atividade_agricola + V1022 + faixa_renda_q + Estrato,
-    data = df
-  )
-}
-
+# Helper pra adicionar o smote nas recipes
 add_smote <- function(rec) {
   rec |> themis::step_smotenc(ebia_grave, over_ratio = 1, seed = 42)
 }
+
+# -----------------------------------------------------------------------------
+# 3. RECEITAS
+# -----------------------------------------------------------------------------
+receita     <- function(formula, df) recipes::recipe(formula, data = df)
+receita_design <- function(formula, df) recipes::recipe(formula, data = df)

@@ -2,7 +2,15 @@
 # AVALIAÇÃO DOS MODELOS
 # -----------------------------------------------------------------------------
 
-# Extrai predições de modelos svyglm
+# Extrai predições de modelos tidymodels, sem design amostral
+predict_tidymodels <- function(model, new_data, cutoff = 0.5) {
+  prob <- predict(model, new_data, type = "prob")$.pred_1
+  y    <- as.integer(as.character(new_data$ebia_grave))
+  pred <- as.integer(prob >= cutoff)
+  tibble::tibble(y = y, pred = pred, prob = prob)
+}
+
+# Extrai predições de modelos com design (svyglm)
 predict_svyglm <- function(model, new_data = NULL, cutoff = 0.5) {
   
   if (is.null(new_data)) {
@@ -27,14 +35,6 @@ predict_svyglm <- function(model, new_data = NULL, cutoff = 0.5) {
     y    <- as.integer(new_data$ebia_grave)
   }
   
-  pred <- as.integer(prob >= cutoff)
-  tibble::tibble(y = y, pred = pred, prob = prob)
-}
-
-# Extrai predições de modelos tidymodels (ex: fit_logit_smote)
-predict_tidymodels <- function(model, new_data, cutoff = 0.5) {
-  prob <- predict(model, new_data, type = "prob")$.pred_1
-  y    <- as.integer(as.character(new_data$ebia_grave))
   pred <- as.integer(prob >= cutoff)
   tibble::tibble(y = y, pred = pred, prob = prob)
 }
@@ -115,4 +115,24 @@ compute_metrics <- function(predictions, model_name = NA_character_) {
 # Compila métricas de todos os modelos em um único tibble comparativo
 compile_metrics <- function(...) {
   dplyr::bind_rows(...)
+}
+
+# -----------------------------------------------------------------------------
+# AVALIAÇÃO NO CADÚNICO
+# -----------------------------------------------------------------------------
+
+prediz_cadunico <- function(modelo, cadunico) {
+  cadunico |>
+    dplyr::bind_cols(predict(modelo, cadunico, type = "prob")) |>
+    dplyr::mutate(pred_class = dplyr::if_else(.pred_1 >= 0.5, 1L, 0L))
+}
+
+resume_cadunico <- function(lista_preds) {
+  lista_preds |>
+    purrr::imap_dfr(~ tibble::tibble(
+      modelo     = .y,
+      n_total    = nrow(.x),
+      n_grave    = sum(.x$pred_class == 1L),
+      pct_grave  = mean(.x$pred_class == 1L) * 100
+    ))
 }

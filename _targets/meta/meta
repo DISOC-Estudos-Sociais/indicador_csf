@@ -48,31 +48,18 @@ cut_renda_fixa|function|d987901aec8df8cc
 metrics_logit_smote_faixa|stem|5feeb63fadcf9e58|d3b2ffb5c7594f77|89204540dd0006ff|102035151||t20599.750626226s|s319b|319|qs|local|vector|||0.04||
 metrics_logit_faixa_renda|stem|21cbd06146c5cb61|50022679b9a3cf10|9bc54113208a1a5b|-1725791176||t20599.7506472833s|s290b|290|qs|local|vector|||0.02||
 raw_data|stem|92e67b5981be92d5|3d8e5f857c63cf80|cd3f287013c50ba6|-1101284392||t20599.7593524951s|s177825049b|177825049|qs|local|vector|||179.59|pacote 'themis' foi compilado no R versão 4.5.3. pacote 'pROC' foi compilado no R versão 4.5.3|
-clean_data|stem|07ee0613a2719e0b|d8a736bba6efd705|730ba8877aafc18c|-259385813||t20599.759478314s|s8161391b|8161391|qs|local|vector|||8.67||
-full_design|stem|d08a6b593086197f|fb3a971075689186|9d8c38b589022136|-1418474883||t20599.7594855729s|s16071230b|16071230|qs|local|vector|||0.21||
-data_split|stem|cfebe18c1bd2374c|afcd1557ee89fad3|8db5d88845b33a1d|-175495908||t20599.7594876818s|s8175940b|8175940|qs|local|vector|||0||
-train_data|stem|9bba92a1921dd034|3eb31f4e7e7efe6a|7ac8d2a6de9dd226|1410565984||t20599.7594892353s|s6195992b|6195992|qs|local|vector|||0||
-test_data|stem|f98b15bb0f24abf9|105ea7bc8ae2d3ed|7ac8d2a6de9dd226|771182612||t20599.7594905525s|s2132814b|2132814|qs|local|vector|||0||
-cortes_quartil_810|stem|b4e2e4784d89cfda|c197f5298bb62617|49d89160fea24c51|670551480||t20599.7594919316s|s131b|131|qs|local|vector|||0||
 logit_smote_quartil_810|stem|b4ef80e0c1e0a7e6|3770be058d4e811f|2cdd45bfe482bbd1|-607821619||t20599.7594971097s|s6618414b|6618414|qs|local|vector|||0.23||
-cortes_decil_810|stem|13a7a0250a22e2ce|85df6616b4b7e1e7|64f43c7f88299df4|-603087807||t20599.7594979428s|s182b|182|qs|local|vector|||0.01||
-cortes_decil_ebia|stem|2e2d407e662c1d90|6e3c063e5b76f1b7|533a8fdd49f77181|2077049444||t20599.7594983495s|s180b|180|qs|local|vector|||0.02||
 logit_smote_faixa|stem|568b3285f57ce32b|be98a06159086931|a048a48905f39a35|-1744007648||t20599.7595020431s|s6476915b|6476915|qs|local|vector|||0.12||
 random_forest|stem|0c6c8698692c69aa|20be34a4a014b108|c4cedb7079bf40ad|1740153120||t20599.7595078917s|s378077b|378077|qs|local|vector|||0.44||
 lasso|stem|803eafeb9e37d7d9|d19565af27a604f7|0a9e7b140c1ef20e|-985220927||t20599.7595215485s|s9604b|9604|qs|local|vector|||1.08||
 logit_smote_decil_ebia|stem|19a7fb99e64103c2|20d90dcdbca019dd|78aa759ffeacb8cb|1385304331||t20599.7595265941s|s6812597b|6812597|qs|local|vector|||0.31||
-train_design|stem|ea73079d5d3f0460|82e512b91510631f|bdc5c202a986968a|-1594634017||t20599.759530645s|s12169791b|12169791|qs|local|vector|||0.14||
 logit_smote_decil|stem|e7bc53e28b492bf8|a803b915d039b2be|98dca9e629badd34|-1385046751||t20599.7595353179s|s6655974b|6655974|qs|local|vector|||0.18||
 logit_smote_estrato|stem|a942f05f8922466f|98ab171cfdbb1dc5|7f23d43cc560daa4|893536396||t20599.7595386451s|s6781410b|6781410|qs|local|vector|||0.15||
 logit_smote_decil_810|stem|028c21ef6911827c|55d8e02c7a7f76f1|c55459d13f9052e0|1801111270||t20599.7595426054s|s6759081b|6759081|qs|local|vector|||0.17||
-train_data_smote|stem|af8b947e43c17359|b223f5650019aeb5|26169e30049cf8f6|-1675602308||t20599.7595453571s|s13294b|13294|qs|local|vector|||0.11||
 logit_smote|stem|cad15f9b44e8631a|4ea9066064857869|cbd8d147adc811d0|1979952643||t20599.759549234s|s7445508b|7445508|qs|local|vector|||0.19|glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu|
 logit_smote_design|stem|ebff223d71f6931e|9dd24e3266570529|42d172fba6050233|1450549055||t20599.7595545612s|s2459747b|2459747|qs|local|vector|||0.39||
 train_data_quartil_810|stem|cbd98c8a3af82567|88e4663388a2f50f|709ed0f1a44e6103|-881634618||t20599.7595563866s|s6199492b|6199492|qs|local|vector|||0||
-test_data_quartil_810|stem|db98871288db5f31|285ef84a276b02cd|ed7e10f3b9b79677|-2018525167||t20599.7595573441s|s2134062b|2134062|qs|local|vector|||0.03||
 train_data_decil_810|stem|d3a816e046add9a3|22121a5be86e11a6|56ea68183cc14ce7|969851754||t20599.7595587839s|s6200035b|6200035|qs|local|vector|||0.01||
-test_data_decil_810|stem|35170cfa97e2a4dd|369029ede61ff29e|5f15e49c7c0fa4c2|2127489975||t20599.7595597501s|s2134234b|2134234|qs|local|vector|||0.01||
-test_data_decil_ebia|stem|87622d1a3c92e273|c90e3b84cdae0715|33e975a14c7df07a|-68623216||t20599.7595607451s|s2134492b|2134492|qs|local|vector|||0||
 train_data_decil_ebia|stem|e1bc2242cff03f24|4b398f8d17eeee12|f3118ec0c2ac7604|1734777687||t20599.7595633479s|s6200782b|6200782|qs|local|vector|||0.01||
 pred_logit_smote_faixa|stem|2abab6c3e01d4f40|f7dbbbcb6aac2253|6f14eaf39e2eb027|1337265844||t20599.7595642431s|s4858b|4858|qs|local|vector|||0.01||
 pred_random_forest|stem|9ab41dfd58909b55|1f2ece211fea9fe9|39bcfe6b6e569f38|-791090886||t20599.7595658826s|s4892b|4892|qs|local|vector|||0.11||
@@ -102,48 +89,36 @@ pred_9_1|stem|8a8616b45d4c5812|9ae762326ee76fba|48359252e7de54c3|-322547994||t20
 metrics_9_1|stem|de4967a5e54e2ce7|242b86d3c601b0db|06ba889688d7c1f0|-1966024867||t20600.5928075878s|s294b|294|qs|local|vector|||0.04||
 fit_logit_faixa_renda|function|3de210d3c602181f
 modelo_1|stem|496d95c7dcd52576|ada12a377bac5cce|de6af7e67e8da30a|-594724386||t20601.5207348844s|s74646427b|74646427|qs|local|vector|||2.26|non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas num|
-pred_1|stem|18ae8412146e0466|e6ed95a209e7b71a|3a43b8d53b97565b|-1520071039||t20601.5207440018s|s13832b|13832|qs|local|vector|||0||
 metrics_1|stem|6789134b53c97e66|38d406bde05715e9|b528634548dbe466|1985453418||t20601.5207449397s|s265b|265|qs|local|vector|||0.02||
 fit_logit_quasi|function|0f13439048f69b70
 modelo_2|stem|2864ed124bf9cf03|3e644d8918fcb31a|acf577aef2dea388|1472612414||t20601.5220741445s|s74728146b|74728146|qs|local|vector|||2.35|non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a|
-pred_2|stem|745f7235f25634d6|7a35de86720fcfbe|80cd8928e009d2c5|647928582||t20601.5220810033s|s9371b|9371|qs|local|vector|||0||
 metrics_2|stem|e5065f18dade97a4|bd6a3f31c0e99b10|b856d86b928de880|-1970045335||t20601.5220837155s|s281b|281|qs|local|vector|||0.17||
 fit_probit|function|8360defe66971243
 modelo_3|stem|368d1e51cb4e1e49|10c307bcb03a44f1|03f2078ef8b64718|-994094185||t20601.5234096586s|s74720769b|74720769|qs|local|vector|||1.93||
-pred_3|stem|0472bcd8272feb5d|7fced41b17659a00|57e8ea5c3286383e|-2017872685||t20601.5234167908s|s36608b|36608|qs|local|vector|||0.02||
 metrics_3|stem|5708b82902e60333|436ceb4d0fe89030|92fcf245bb6762bd|95085026||t20601.5234179155s|s282b|282|qs|local|vector|||0.05||
 modelo_4|stem|ea33b6246e836742|0324eaa8d13a7caa|7e99b7e85bd916ab|135321623||t20601.524350849s|s80828999b|80828999|qs|local|vector|||2.67||
-pred_4|stem|4ba074a69baa2c0a|0c81b5af4aa92d19|56aa7df132b94007|2046245167||t20601.5243596938s|s36410b|36410|qs|local|vector|||0||
 metrics_4|stem|154b51a1796c9abf|459c6462ad8b19d2|f941fa933a387682|-1420026788||t20601.5243606385s|s281b|281|qs|local|vector|||0.04||
 fit_logit_smote|function|dc039223e739d62f
 fit_logit_smote_faixa|function|d05ad28baccf8b5c
 modelo_5|stem|801b652b2fbe3ab9|98ec461b695e473d|7c2ed46911235026|2076961541||t20601.5261771059s|s7445506b|7445506|qs|local|vector|||0.39|glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu|
-pred_5|stem|aa96976d9844c3f9|d592841333c0c2d9|0e31fcaad44069e2|-793211706||t20601.5261803258s|s14801b|14801|qs|local|vector|||0.01||
 metrics_5|stem|40caec5e69afc14f|b5d4f6b1191550bb|175fce37449fdf6f|-828025294||t20601.5261810508s|s310b|310|qs|local|vector|||0.04||
 fit_logit_smote_decil|function|11df6e15a69688db
 modelo_6|stem|129f282ba1ddb041|bc2f5f2d25b8124c|cf5742baf8b3b5c6|189905572||t20601.5369253074s|s6476913b|6476913|qs|local|vector|||0.21||
-pred_6|stem|2abab6c3e01d4f40|e8594ee74a8b5278|68d9be974db3a57e|-147592902||t20601.5369284059s|s4858b|4858|qs|local|vector|||0||
 metrics_6|stem|3bf1e7ca6ddbbd63|f628c0e5da3b7503|56d9cb669149ea86|-1158750934||t20601.5369292062s|s309b|309|qs|local|vector|||0.01||
 fit_logit_smote_estrato|function|b77d3e9677ba07e6
 modelo_7|stem|e067e13e2b057064|53ccea31638b404f|293bf744e896ad72|-1182155815||t20601.5381559968s|s6655988b|6655988|qs|local|vector|||0.23||
-pred_7|stem|3ef27267269c089a|56c3ef5471eb00fb|a9b2e7cf4c644af6|559132148||t20601.5381594246s|s5923b|5923|qs|local|vector|||0.01||
 fit_logit_smote_design|function|55c6cbe8ec6b79a3
 modelo_8|stem|fd930a2fac0d89b7|2d7c1ab83791c2b4|637269a1178d8341|-88170922||t20601.5392694604s|s6781402b|6781402|qs|local|vector|||0.2||
-pred_8|stem|87d8c426a1553f7b|5abb189f10b5efa6|16f19377756925fa|-1816148022||t20601.539272768s|s8013b|8013|qs|local|vector|||0.02||
 metrics_7|stem|837b7b4403f883c8|811c9389995ae0c6|920f261d0666e2fb|-2063082449||t20601.5392736439s|s308b|308|qs|local|vector|||0.03||
 metrics_8|stem|8de2e8bd739317db|b9dc1c0deb51cb06|684457a8494142f3|-278546259||t20601.539273981s|s310b|310|qs|local|vector|||0||
 fit_logit_smote_quartil_810|function|c889529e181f7b8d
 modelo_9|stem|6ea3bfca2a7de635|96c063a13d8ca986|ca5aafd0f5460b87|932983732||t20601.540319693s|s2459752b|2459752|qs|local|vector|||0.39||
-pred_9|stem|0420b55c5f468e77|00cc5e860b74f7b8|f398b0582566bf32|1113328764||t20601.5403206448s|s5851b|5851|qs|local|vector|||0||
 metrics_9|stem|f545302acbed89ef|d9fbcf746934a468|83927f7d0eb4a424|598969571||t20601.5403213874s|s293b|293|qs|local|vector|||0.02||
 fit_logit_smote_decil_810|function|6cebaff5156beaab
 modelo_10|stem|ccc5a0f0d15a4904|06f09313451e7213|e35fc6220c706b0c|638078348||t20601.5491709797s|s6618412b|6618412|qs|local|vector|||0.22||
-pred_10|stem|386353d749a9aebd|83b874369bbbbb58|1559b4e5929d8b99|-386073375||t20601.5491745282s|s6672b|6672|qs|local|vector|||0.01||
 fit_logit_smote_decil_ebia|function|a0f8802ae3c45176
 modelo_11|stem|cc6da411248d940a|e40637c9ed9854e8|9a753a142bddc210|-1352613294||t20601.5499852413s|s6759091b|6759091|qs|local|vector|||0.23||
-pred_11|stem|3e29ce3daf43a7cd|f9dee5b40d97a922|8701efb7539e49df|-1140776009||t20601.5499885047s|s7803b|7803|qs|local|vector|||0.02||
 modelo_12|stem|b3a7a30ba501004c|8d945546e6b89953|42d6e2e384deb80e|1360345883||t20601.5506375782s|s6812716b|6812716|qs|local|vector|||0.21||
-pred_12|stem|3745289411feedb1|28a96fc51fa2ca24|3837ed8830a6dc8d|1953116883||t20601.5506408811s|s8375b|8375|qs|local|vector|||0.02||
 fit_lasso|function|71f5be556bbf57a1
 metrics_11|stem|83c3e7dcf75c2786|39d80287164d3729|de57d925377112c3|1382268847||t20601.5513847451s|s313b|313|qs|local|vector|||0.01||
 metrics_12|stem|7722d798926a244b|179b9f39be8446da|de3f60baf9c6427a|670069183||t20601.551385479s|s311b|311|qs|local|vector|||0||
@@ -152,7 +127,6 @@ fit_random_forest|function|8883376e2b518e03
 modelo_13|stem|2f4216dccf0a6370|12f1e6bd6fab4625|807d6deb6e5ff054|-600122602||t20601.5533622832s|s9611b|9611|qs|local|vector|||1.03||
 fit_lasso_smote|function|97a69a769a93e15a
 lasso_smote|stem|4c842451df621ca6|b8a2ffb903773016|2abbcb361afe9916|1092194637||t20601.5548949879s|s523976b|523976|qs|local|vector|||0.31|Unknown or uninitialised column: `V1028`.|
-pred_13|stem|dc400ad737a65f08|ea33c03379bac4b5|b4baa0081f1ddddf|-1987590898||t20601.5548958729s|s4956b|4956|qs|local|vector|||0.01||
 pred_lasso_smote|stem|2be36fb752024b97|4da40ff4e22b2f25|df8f2044c1c78b9d|273145020||t20599.7597843497s||5872|qs|local|vector|||0||objeto 'lasso_smote' não encontrado
 pred_15|stem|2be36fb752024b97|30a8d0527905b7f5|26ba84b50f5ef9bb|1641351158||t20601.5580829558s|s5872b|5872|qs|local|vector|||0.02||
 metrics_15|stem||88c63d4140d188b6|306b70e3697c0c7d|-322108281||t20601.5580843324s||0|qs|local|vector|||0.03||No valid data provided.
@@ -172,17 +146,11 @@ fit_9|function|55c6cbe8ec6b79a3
 fit_9_1|function|25a4adc5a9253c7d
 modelo_15|stem|d0eda934d07033ba|bce666dc18a55f0d|fc20697e42edb34a|-2069044753||t20601.6804451039s|s9835b|9835|qs|local|vector|||1.8|Unknown or uninitialised column: `V1028`.|
 pred_14|stem|95aa792c04f1926a|bedb2e5ddffa4f07|a88b80e0c7e5c8cd|863841431||t20601.6804468621s|s4907b|4907|qs|local|vector|||0.08||
-modelo_1_1|stem|496d95c7dcd52576|c4e6cd2f39649b97|95817aa879e2ce06|-571337743||t20601.6804857158s|s74646427b|74646427|qs|local|vector|||2.19|non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas num|
-modelo_1_2|stem|2864ed124bf9cf03|726cffa77d5e06e5|73c2fa76e1de3ba4|-978074235||t20601.6805340474s|s74728146b|74728146|qs|local|vector|||3.33|non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a|
-modelo_1_3|stem|368d1e51cb4e1e49|1829e71a0006ef73|37a6739b8930202e|-845285154||t20601.6805718116s|s74720769b|74720769|qs|local|vector|||2.49||
-modelo_1_4|stem|ea33b6246e836742|e183499085af7592|32b576b44964e9fb|-937126578||t20601.680615666s|s80828999b|80828999|qs|local|vector|||2.97||
 metrics_14|stem|483b2c61fc6b20dd|89ed5ab908b985e7|059a6ea8ec80deef|-826854288||t20601.6806168756s|s272b|272|qs|local|vector|||0.03||
-pred_1_1|stem|18ae8412146e0466|dd7b6683f7bff9ec|0e433fb6972b2148|2080023784||t20601.6806261876s|s13832b|13832|qs|local|vector|||0||
 pred_1_2|stem|745f7235f25634d6|4f944945232a782b|75645292d90a1b8b|869833965||t20601.6806306773s|s9371b|9371|qs|local|vector|||0.01||
 pred_1_3|stem|0472bcd8272feb5d|e827393424a3981d|789154a7652ffe4b|1563344045||t20601.680635956s|s36608b|36608|qs|local|vector|||0||
 pred_1_4|stem|4ba074a69baa2c0a|08f6aaa901cdbf9b|a03b2546690ba4e9|-675360113||t20601.6806400882s|s36410b|36410|qs|local|vector|||0.02||
 metrics_1_1|stem|d87d26d1ca2fa87e|191efc311497664f|717bffb2e6703aa7|-1535730190||t20601.6806405774s|s267b|267|qs|local|vector|||0||
-metrics_1_2|stem|c8198715f5f020bf|5d494a8638bf5951|a3639908690f024b|1408044333||t20601.6806409776s|s283b|283|qs|local|vector|||0.02||
 metrics_1_3|stem|b1f14a979a7c2891|423e1c3fcf9c475c|d16c94b21525fe33|1848472356||t20601.6806412687s|s285b|285|qs|local|vector|||0||
 metrics_1_4|stem|220ff4fec15be0f3|e0990c74023de39c|921eccea4157ad3a|782803292||t20601.6806416182s|s283b|283|qs|local|vector|||0||
 fit__2_1|function|55c6cbe8ec6b79a3
@@ -194,23 +162,11 @@ fit_8|function|b77d3e9677ba07e6
 fit_10|function|c889529e181f7b8d
 fit_11|function|6cebaff5156beaab
 fit_12|function|a0f8802ae3c45176
-modelo_2_1|stem|428be62488ca674b|cd89bd9be2e8ad21|c44b8cdaf2a845f1|554790670||t20601.6872425961s|s2459755b|2459755|qs|local|vector|||0.42||
-modelo_2_2|stem|a868fa8f1e227f1e|36836ff3bd82eca4|79758ff6cf96cd91|1464195690||t20601.6872454606s|s2005975b|2005975|qs|local|vector|||0.16|non-integer #successes in a binomial glm!|
-pred_2_1|stem|0420b55c5f468e77|50a697da2a2f9b36|fb6020a0dffcf797|-439331056||t20601.6872462953s|s5851b|5851|qs|local|vector|||0||
 pred_2_2|stem|8a8616b45d4c5812|3f16400a002aee62|d0735ef8a9c4b27b|2023239110||t20601.6872469224s|s4618b|4618|qs|local|vector|||0.02||
 metrics_2_1|stem|5466796f84fc087f|49266a7f0101b862|b6ced31bb674f5e9|-583583068||t20601.6872475018s|s295b|295|qs|local|vector|||0.02||
 metrics_2_2|stem|f49708a0a0e90f38|a2782c63bb925714|b12f818dcb1f7f78|505503239||t20601.6872478278s|s294b|294|qs|local|vector|||0||
 fit_13|function|71f5be556bbf57a1
 fit_16|function|8b514c6c453dc038
-modelo_3_1|stem|1a5dd056d0bf2220|52069836b5cdabb7|f9a1682691aa5b21|1326584831||t20601.699068009s|s7445511b|7445511|qs|local|vector|||0.27|glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu|
-modelo_3_2|stem|f365d67f75a8fcfd|6dbbd394a06e038a|81334fff86cf82a4|1511396597||t20601.6990727859s|s6480152b|6480152|qs|local|vector|||0.11||
-modelo_3_3|stem|5b798ea8fda69866|74ea5ee764b635b5|d4e462cac12b77a4|1640243413||t20601.6990754516s|s6476922b|6476922|qs|local|vector|||0.11||
-modelo_3_4|stem|3ba8b59c6aab14dc|8635531f4decbf53|9cdfe8a52f4d372a|-1353733386||t20601.6990800181s|s6655992b|6655992|qs|local|vector|||0.28||
-modelo_3_5|stem|ac22b1ad33268b21|bd8ecfa7cbd40085|38b8fdf9588b1a70|439842520||t20601.6990850014s|s6781406b|6781406|qs|local|vector|||0.3||
-modelo_3_6|stem|f25611ddcde3ecfc|42eb2b3ce780b823|0fdd8a1b8e30ee54|-499203458||t20601.699087788s|s6618400b|6618400|qs|local|vector|||0.13||
-modelo_3_7|stem|f5ab079dc03ea062|835aafee718a9104|157af3d0e115110d|-499738563||t20601.6990906939s|s6759075b|6759075|qs|local|vector|||0.15||
-modelo_3_8|stem|ce2434c2beeec2e7|b8aa8fe127794afa|2950f0392990b01c|1989243350||t20601.6990937442s|s6812590b|6812590|qs|local|vector|||0.13||
-pred_3_1|stem|aa96976d9844c3f9|fe2c5ed3032e64ac|3312b6faaceb17f3|1295987737||t20601.6990946411s|s14801b|14801|qs|local|vector|||0.01||
 pred_3_2|stem|a99415d66ca0c048|a970b7facffdb462|bfa48ff504d7cf11|1377980042||t20601.6990956389s|s4641b|4641|qs|local|vector|||0.02||
 pred_3_3|stem|2abab6c3e01d4f40|b523d24c96bf9804|966d4a7c05a65131|1421959001||t20601.6990964576s|s4858b|4858|qs|local|vector|||0.02||
 pred_3_4|stem|3ef27267269c089a|bbc6acd645e40c52|a6f0a6e06cd33381|-581832887||t20601.6990991735s|s5923b|5923|qs|local|vector|||0.17||
@@ -226,54 +182,233 @@ pred_3_6|stem|386353d749a9aebd|1778b632e1c5b637|0b7695fc082b786b|957205028||t206
 metrics_3_8|stem|a5a8e4db48b4d251|11e6c9dd03e6a256|b7d9136dfaf5da4e|-1406740227||t20601.6991065168s|s310b|310|qs|local|vector|||0.01||
 metrics_3_7|stem|366a53cf6e6500f3|a6fc304264551627|bc240a0516b5078e|280612892||t20601.6991069855s|s313b|313|qs|local|vector|||0||
 metrics_3_6|stem|d57f47c651777d6b|433f379652af80df|ac8cb17f900f597d|-1255577625||t20601.6991074213s|s309b|309|qs|local|vector|||0.01||
-adiciona_cadunico|function|605782ec041fa18f
-predict_lasso|function|78b136f250b48c84
-fit_4_1|function|71f5be556bbf57a1
-make_decis_condicional|function|19c552508acd1c07
-cut_renda_1|function|d987901aec8df8cc
-fit_4_2|function|8b514c6c453dc038
-fit_3_1|function|dc039223e739d62f
-cut_renda_2|function|e17ecfc1f1dd9e1a
-fit_3_2|function|ec29600fd8b2bbf2
-cut_renda_3|function|f80501730e9e11e5
-fit_3_3|function|d05ad28baccf8b5c
-apply_faixa_decil_ebia|function|d1470a7dff776236
-fit_2_1|function|55c6cbe8ec6b79a3
-cut_renda_4|function|157111b729bbbaf3
-fit_3_4|function|11df6e15a69688db
-fit_2_2|function|25a4adc5a9253c7d
-cut_renda_6|function|cd6d5a48354d2a40
-cut_renda_5|function|a8c5b8729db8a0c8
-fit_3_5|function|b77d3e9677ba07e6
-make_faixa_renda_decil_810|function|56c2e04e01fd289f
-fit_1_1|function|8956a14e9d337a0a
-make_faixa_renda_quartil_810|function|be7fb081ae8d7763
-fit_1_2|function|3de210d3c602181f
-fit_1_3|function|0f13439048f69b70
-make_faixa_renda_decil_ebia|function|5aea61f6022a102e
-fit_1_4|function|8360defe66971243
-get_cortes_quartil_810|function|ebeedf0ff3186133
-compute_metrics|function|8a8f107583e2a3ca
-apply_faixa_quartil_810|function|ebfc9dc0942c1c80
-make_smote_data|function|1ba7e4bebe0410a4
-predict_tidymodels|function|0bb2e417932645b5
-predict_svyglm|function|652395c72d406cf3
-get_data|function|a1ab09a802aa8a77
-adiciona_ebia|function|0e7da32e38012ecb
-compile_metrics|function|23a0f135b2084d54
-get_cortes_decil_ebia|function|c40d18b38a8be2f9
-pnadc_design|function|a1393945641cb27e
-predict_random_forest|function|0cf64c227e86c52e
-get_cortes_decil_810|function|e0786d1becace242
-apply_faixa_decil_810|function|08bea1a535f04571
-modify_data|function|90ae18cb608fc54c
-fit_3_7|function|6cebaff5156beaab
-fit_3_6|function|c889529e181f7b8d
-fit_3_8|function|a0f8802ae3c45176
-modelo_4_1|stem|dcd7b241b1890c68|9c232b9e940878af|7ecd16ca634d1d46|886402263||t20601.7050309686s|s9838b|9838|qs|local|vector|||1.83|Unknown or uninitialised column: `V1028`.|
-modelo_4_2|stem|b23b073b43ce2de8|e9b8f16e56785f12|5ea1a6b063b1bb8b|-932702467||t20601.7050356231s|s518889b|518889|qs|local|vector|||0.33||
-pred_4_1|stem|2be36fb752024b97|8b937c439795db56|72a56ffc643ceee7|1363656506||t20601.7050366599s|s5872b|5872|qs|local|vector|||0.02||
 pred_4_2|stem|4ae15f165fa9d32b|aeb9f3ca98b3ca82|2764dcbcf7a9c680|-4607713||t20601.7050384818s|s5841b|5841|qs|local|vector|||0.08||
 metrics_4_1|stem|430d4e7abc36a6a9|c6db481776d2c284|4919d1c085b62b98|343797259||t20601.7050390581s|s292b|292|qs|local|vector|||0.01||
 metrics_4_2|stem|97f5cb7d3fd51f3b|9204e7758fb1f8dd|cf51ec7ba5a0c5f8|1166072706||t20601.7050394597s|s290b|290|qs|local|vector|||0||
 metrics_comparativo|stem|727442f7b3997620|b73fdc5d4c23be24|77bc2bd594dd2fae|-1627134709||t20601.7050398011s|s858b|858|qs|local|vector|||0||
+rec_teste|stem|bd022c0beff5d9e4|8a7b1e6f2da773c7|d11c8ed3d199c683|-1064761358||t20602.7871867493s|s6226593b|6226593|qs|local|vector|||0||
+modelo_teste|stem|01638df141fbf0bd|91f7324d8320f752|42d9c073a7573fb3|140532149||t20602.7871931165s|s7405792b|7405792|qs|local|vector|||0.31|glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu|
+formula_vdi5008|object|8f52ed3aba4a000c
+fit_teste|function|86e5204aa3fe0175
+fit_svyglm_smote|function|f23978a000ba3ccd
+formula_faixa|object|874adbce7767f09f
+rec_vdi5008|function|237a6bdd37804c0c
+rec_faixa|function|6748113f2bec0724
+rec_svy_vdi5008|function|d575f4ffe294a5d7
+rec_svy_faixa|function|e9d6f1ebbf0eca1d
+rec_1_design|stem|22fce849549d1f93|c8ef74e23fd49060|ee8abaec64884a2f|865932744||t20605.5664287849s|s6034673b|6034673|qs|local|vector|||0.01||
+rec_2_design|stem|a428e8cd6c9f7d16|12d3d9c92c5b4eb8|8a398c8a1975f57f|-1073970511||t20605.5725554574s|s12042833b|12042833|qs|local|vector|||0.01|Using formula(x) is deprecated when x is a character vector of length > 1.   Consider formula(paste(x, collapse = ' ')) instead.|
+rec_faixa_q_estrato|function|a5015e609c745532
+rec_base_vdi5008|function|9a5f4492cca7b329
+rec_cadunico|function|9da30fdee050c2c8
+rec_base_faixa_renda|function|f298155a78ecba2d
+rec_decis_estrato|function|bea215abae84a4fc
+rec_decis_renda|function|b1b0f96f327f3295
+rec_3_1_design|stem|b9a6dcb024846bb9|8c78e5c3ffe4e073|703ae57e8a3b1bcb|1173202246||t20605.6213509019s|s12069878b|12069878|qs|local|vector|||0.05||
+teste_3_1_1|stem|9f64d52a49ed2234|a73175ea00429fc8|c0218e5b468b198b|98164910||t20605.6217678317s|s194739698b|194739698|qs|local|vector|||4.53||
+teste_3_1|stem|82488f8394d752fc|41121bed3e5990ff|f1fa76f5e707e9ed|-1120601559||t20605.621772779s|s1196599b|1196599|qs|local|vector|||0.27|glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu|
+pred_teste_3_1|stem|aa96976d9844c3f9|2dbb82974ca99f45|ae46b490b2b85caa|-1937425784||t20605.6228745075s|s14801b|14801|qs|local|vector|||0.03||
+pred_teste_3_1_1|stem|a2af7e01d491bc49|d3ddf0ea2e72a018|ca19d704b4bc47f5|-1766301484||t20605.6233162448s|s14752b|14752|qs|local|vector|||0.01||
+metrics_1_2|stem|c8198715f5f020bf|5d494a8638bf5951|d8adcbb32b858d67|1408044333||t20601.6806409776s||283|qs|local|vector|||1.95|pacote 'themis' foi compilado no R versão 4.5.3. pacote 'pROC' foi compilado no R versão 4.5.3|objeto 'pred_1_2' não encontrado
+rec_3_1|stem|1fb857c5086d01d3|12d3d9c92c5b4eb8|f9a5337699edc008|1017238070||t20605.7317608188s|s12066239b|12066239|qs|local|vector|||0.02||
+rec_1_1|stem|3fa4b6307451f480|8c78e5c3ffe4e073|6c91e1c45684bc36|-1871452982||t20605.7317631962s|s12049655b|12049655|qs|local|vector|||0.01||
+rec_4_1|stem|5964313e43801bc8|5c0b47d7ec9493c1|440f46ca1f89df7f|276956411||t20605.7317676947s|s12064659b|12064659|qs|local|vector|||0||
+rec_2_1|stem|0a6cdb22152347f3|6ab871e0c4791c7c|b299972585a7424e|476866941||t20605.7317712161s|s12066622b|12066622|qs|local|vector|||0||
+rec_7_1|stem|a53a5d58039c0854|7fcc0e607aa7353d|15ff33f6eac659bb|1158907082||t20605.7317728887s|s12068906b|12068906|qs|local|vector|||0.01||
+rec_5_1|stem|d03d1d7930790664|4eee97446b80baa9|74fcb5024d834007|1161065297||t20605.7317748755s|s12067765b|12067765|qs|local|vector|||0||
+mdl_3_1|stem|d06034969dc7d0fb|4ce47ce8abd20323|72e815d668416550|-1011593533||t20605.7333260842s|s194202723b|194202723|qs|local|vector|||4.27||
+mdl_1_1|stem|e03d64595854614b|b69a33d180659608|493265ad0843cca7|1380211345||t20605.7333759618s|s192993651b|192993651|qs|local|vector|||2.71||
+mdl_6_1|stem|bc28037d16322659|8fd247ce8dc85cdd|b75860ed4c46dcbc|1082614889||t20605.7334377769s|s194731171b|194731171|qs|local|vector|||3.95||
+mdl_4_1|stem|4c4eae75b7a5e1a0|f74ff99134494ed1|c4dda118dc795525|-2051796733||t20605.7334937521s|s194168893b|194168893|qs|local|vector|||3.44||
+mdl_2_1|stem|6b9f3d82a509609c|13a261c9d36dd427|349da4509d8a4f46|1118294640||t20605.7335559864s|s194064604b|194064604|qs|local|vector|||3.95||
+mdl_7_1|stem|cb01128fa253b86b|9674aa48a78e7c09|6e783f9b6f800597|-1930790862||t20605.7336213856s|s195405253b|195405253|qs|local|vector|||4.26|4 replicates gave NA results and were discarded.|
+mdl_5_1|stem|fee33d70abe16c24|2b9648eb138abebd|7609c33243435151|1432043528||t20605.7336787356s|s194480360b|194480360|qs|local|vector|||3.62||
+pred_3_1|stem|8f320c62743ccd7e|edebe2a168c7c3e2|9d1f74b60de88f68|1295987737||t20605.734064174s|s14093b|14093|qs|local|vector|||0||
+pred_1_1|stem|0ffff3b3264ac951|8ef0adfc6eaae7af|e4d700cf95063e09|2080023784||t20605.7340725679s|s11246b|11246|qs|local|vector|||0.01||
+pred_6_1|stem|8c22bd50846c2622|127cbc68876c8161|3777d44b2b71d9c7|123098218||t20605.7340789339s|s15189b|15189|qs|local|vector|||0||
+pred_4_1|stem|0f677fe535139218|6908ce42844514b7|3f2056b7fc9b09c7|1363656506||t20605.7340872429s|s13812b|13812|qs|local|vector|||0||
+pred_2_1|stem|3f8a38624534f3b0|ca78ce5ddbb8013f|dae68604151bb881|-439331056||t20605.7340935757s|s14011b|14011|qs|local|vector|||0||
+pred_7_1|stem|922d913501edfdad|c6b38110ff59e252|f72925e16b7c4af6|374483262||t20605.7340996231s|s15866b|15866|qs|local|vector|||0||
+pred_5_1|stem|8e97414b87527530|72bbd66f91707ab3|e186baef3583af31|-1006988904||t20605.7341075518s|s14687b|14687|qs|local|vector|||0||
+mtrcs_3_1|stem|f751cc1584c3b0ef|9565be82b7e0848e|bd2bdf2f05e5a1b7|-897083878||t20605.7341081176s|s296b|296|qs|local|vector|||0.03||
+mtrcs_1_1|stem|bd68d734977cb0c1|5cb2992daf796691|19780e97368c5ecf|1944092490||t20605.7341084508s|s292b|292|qs|local|vector|||0.01||
+mtrcs_6_1|stem|66a364de2f928ef9|5116c4c97a7706a6|76a0e695cdcd1105|2003732933||t20605.7341087462s|s292b|292|qs|local|vector|||0||
+mtrcs_4_1|stem|ab05fd39a17670be|52f0bf8df1129dd4|30a2e54d92f791b7|-390495957||t20605.7341089786s|s292b|292|qs|local|vector|||0||
+mtrcs_2_1|stem|a80f4e881a2191c0|65395b187dff5c8d|c585379f7c239dc7|528886220||t20605.7341092647s|s292b|292|qs|local|vector|||0||
+mtrcs_7_1|stem|619f29e3c77cfb57|affed01b90d6ebc5|5747794369c42a2f|-353300361||t20605.7341096033s|s295b|295|qs|local|vector|||0||
+mtrcs_5_1|stem|bebf877f08aa08f0|4580efe84655d11f|a85c13d81e88c7c0|909925112||t20605.7341100122s|s293b|293|qs|local|vector|||0||
+rec_6_1|stem|b627911d50d0aff5|a7723c2c3d44dc6d|35372a4eae1816eb|-1880488358||t20605.7317657743s||12067956|qs|local|vector|||0.07|Using formula(x) is deprecated when x is a character vector of length > 1.   Consider formula(paste(x, collapse = ' ')) instead.|✖ Misspelled variable name or in-line functions detected. ℹ The following function/misspelling was found: `atividade_agrícola`. ℹ Use steps to do transformations instead. ℹ If your modeling engine uses special terms in formulas, pass that formula to   workflows as a model formula (`?parsnip::model_formula()`).
+mdl_14|stem||235f761d4e5b9797|5a31ce2b6dd63839|-1875894904||t20606.4815358835s||0|qs|local|vector|||0.02||objeto 'rec_14' não encontrado
+clean_data|stem|e4f5018a5dcbc2ad|d8a736bba6efd705|256a691887eccc8a|-259385813||t20606.6970070198s|s8170844b|8170844|qs|local|vector|||5.97||
+data_split|stem|e5feabf45ced6ec0|afcd1557ee89fad3|441d6b932529551d|-175495908||t20606.6970088129s|s8185941b|8185941|qs|local|vector|||0.01||
+test_data|stem|31b4afb802021291|105ea7bc8ae2d3ed|50781ee462f98068|771182612||t20606.6970147221s|s2135429b|2135429|qs|local|vector|||0||
+train_data|stem|7ec10fd57ce0b538|3eb31f4e7e7efe6a|50781ee462f98068|1410565984||t20606.6970166851s|s6202967b|6202967|qs|local|vector|||0||
+train_data_smote|stem|63172a3924689943|b223f5650019aeb5|28b453fafebe2969|-1675602308||t20606.6970188549s|s13365b|13365|qs|local|vector|||0.09||
+cortes_decil_ebia|stem|2e2d407e662c1d90|6e3c063e5b76f1b7|d8b70ae42273741d|2077049444||t20606.6970241741s|s180b|180|qs|local|vector|||0||
+cortes_decil_810|stem|13a7a0250a22e2ce|85df6616b4b7e1e7|8cf91e2bb13f97ed|-603087807||t20606.6970246415s|s182b|182|qs|local|vector|||0||
+cortes_quartil_810|stem|b4e2e4784d89cfda|c197f5298bb62617|b402c9968757ebf2|670551480||t20606.6970251395s|s131b|131|qs|local|vector|||0.02||
+modelo_3_1|stem|d7fdd24c2c4d080d|52069836b5cdabb7|551edeceaa1a4a3a|1326584831||t20606.6970291797s|s7418379b|7418379|qs|local|vector|||0.23|glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu|
+modelo_3_2|stem|c5772247613f8224|6dbbd394a06e038a|8151713f8cdad398|1511396597||t20606.6970324693s|s6440802b|6440802|qs|local|vector|||0.16||
+modelo_3_3|stem|3be4899f56dff247|74ea5ee764b635b5|0106ba223f4c7b19|1640243413||t20606.697035907s|s6412755b|6412755|qs|local|vector|||0.17||
+modelo_3_4|stem|1fadec6772bd7251|8635531f4decbf53|1c5c3d265c601fb5|-1353733386||t20606.6970393158s|s6531700b|6531700|qs|local|vector|||0.16||
+modelo_3_5|stem|a4af41ad78e4e28b|bd8ecfa7cbd40085|44793568dfff998b|439842520||t20606.6970428257s|s6721938b|6721938|qs|local|vector|||0.21||
+modelo_3_6|stem|4812dea76e421b31|42eb2b3ce780b823|667464e6538cd513|-499203458||t20606.6970455519s|s6565528b|6565528|qs|local|vector|||0.12||
+modelo_3_7|stem|b2ab6d757810aa8d|835aafee718a9104|f23d7f3ac64674ea|-499738563||t20606.6970494122s|s6712137b|6712137|qs|local|vector|||0.22||
+modelo_3_8|stem|e48e53580986a993|b8aa8fe127794afa|a8253430214c60ad|1989243350||t20606.6970522793s|s6724920b|6724920|qs|local|vector|||0.13||
+modelo_2_1|stem|d0e9378b9e5e8e55|cd89bd9be2e8ad21|3a835bc9c75d29af|554790670||t20606.6970588101s|s2413708b|2413708|qs|local|vector|||0.24||
+modelo_2_2|stem|bd402140a8166b3b|36836ff3bd82eca4|c0bee7b2942c31fa|1464195690||t20606.6970611801s|s1996517b|1996517|qs|local|vector|||0.17|non-integer #successes in a binomial glm!|
+modelo_4_1|stem|9bd256576a6ae8c9|9c232b9e940878af|35c64d625375fe26|886402263||t20606.6970850893s|s9876b|9876|qs|local|vector|||1.59|Unknown or uninitialised column: `V1028`.|
+modelo_4_2|stem|6750afd4200b2ab1|e9b8f16e56785f12|f94506ec39725b72|-932702467||t20606.6970901148s|s521399b|521399|qs|local|vector|||0.39||
+modelo_1_1|stem|0aea778fb325c9f8|c4e6cd2f39649b97|e896e3d9e9c18693|-571337743||t20606.6971203929s|s74705169b|74705169|qs|local|vector|||1.99|non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu. non-integer #successes in a binomial glm!. glm.fit: probabilidades ajustadas num|
+modelo_1_2|stem|1083379b4bfeab30|726cffa77d5e06e5|56545fe022ae19a8|-978074235||t20606.6971533945s|s74796470b|74796470|qs|local|vector|||2.1|non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a binomial glm!. non-integer #successes in a|
+modelo_1_3|stem|9dea4ef5f8f9561e|1829e71a0006ef73|1d7dc6494d0433eb|-845285154||t20606.697184449s|s74650649b|74650649|qs|local|vector|||2||
+modelo_1_4|stem|930b9d11030cc71e|e183499085af7592|a2c13bc92a346662|-937126578||t20606.6972253529s|s80867361b|80867361|qs|local|vector|||2.82||
+test_data_decil_ebia|stem|a0d081ebfe6c51a4|c90e3b84cdae0715|887f1bd8ea4da494|-68623216||t20606.697226715s|s2136652b|2136652|qs|local|vector|||0||
+test_data_decil_810|stem|c62282d3bd05dd5f|369029ede61ff29e|3a291d4994e96308|2127489975||t20606.6972272918s|s2136427b|2136427|qs|local|vector|||0||
+test_data_quartil_810|stem|2dab6561fea4b79c|285ef84a276b02cd|f027819fb568b834|-2018525167||t20606.6972280761s|s2136261b|2136261|qs|local|vector|||0.01||
+rec_10|stem|25144d36c9cf36e8|533a99874f5850aa|d122bfb1229a2488|707337023||t20606.7181870696s|s12557b|12557|qs|local|vector|||0.01||
+rec_11|stem|5c42994d23f1802b|4245d94483e198de|d122bfb1229a2488|766377027||t20606.7181878557s|s13010b|13010|qs|local|vector|||0||
+rec_12|stem|0871bcd76b2cafc1|1a7298e4c9208fda|d122bfb1229a2488|1107198360||t20606.7181887784s|s13596b|13596|qs|local|vector|||0||
+rec_13|stem|1db114c1b057d4ac|aca70ff7c8a9f12a|d122bfb1229a2488|-696724557||t20606.7181897858s|s12731b|12731|qs|local|vector|||0.05||
+rec_1|stem|290f1ef3e4db6040|176d741e1157ecf6|d122bfb1229a2488|-1081900984||t20606.7181903207s|s15393b|15393|qs|local|vector|||0.01||
+rec_4|stem|526271f7317b0fef|60a14714de83470e|d122bfb1229a2488|1256816657||t20606.718194106s|s18605b|18605|qs|local|vector|||0.01||
+rec_8|stem|7e4c2ee962538403|c1610ee5535da214|d122bfb1229a2488|690021575||t20606.7181982648s|s13483b|13483|qs|local|vector|||0.01||
+rec_9|stem|1d7c1d946cfa2551|a29a4eb214a4496c|d122bfb1229a2488|1292722346||t20606.718198875s|s12928b|12928|qs|local|vector|||0||
+mdl_10|stem|faf5d709fe65e8bf|746613b1337c7fc8|aa715053ee99b5a7|-2047909923||t20606.7182033087s|s566857b|566857|qs|local|vector|||0.32||
+mdl_11|stem|ec37a5030cf4bdc4|f421ba7f98e83089|402bfc6ee6eb4f57|237842608||t20606.7182073661s|s688569b|688569|qs|local|vector|||0.3||
+mdl_12|stem|0b3571b1d3ab3b01|bb12514e8902eec8|c779083860ed0197|-730325065||t20606.7182095548s|s680849b|680849|qs|local|vector|||0.12||
+mdl_13|stem|79572da97c071df1|abb5c14b4111f5ed|abd920f147ad9510|-1952094228||t20606.7182118002s|s668943b|668943|qs|local|vector|||0.16||
+mdl_1|stem|60bb1ad8db12c210|8de0a4df964fd3c6|14d7f5da9f5f1e82|-285953255||t20606.718215239s|s486430b|486430|qs|local|vector|||0.25|glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu|
+mdl_4|stem|157b3dfa26cff30d|caf6a6a69130d16d|e500d4a59057d22f|-859614546||t20606.7182231826s|s914501b|914501|qs|local|vector|||0.12|glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu|
+mdl_8|stem|93e0d249b0970b98|91faebfd3cae9e89|43e3878253df7621|682634402||t20606.7182344007s|s782833b|782833|qs|local|vector|||0.15||
+mdl_9|stem|a20af95f3fbb00eb|6454bac1ad82610f|09b47dc29cc56879|1509803372||t20606.7182385818s|s682607b|682607|qs|local|vector|||0.3||
+pred_10|stem|c89949db95850452|dbe29af043193cc6|b2845b08d79cda6d|-386073375||t20606.7182392976s|s8178b|8178|qs|local|vector|||0.03||
+pred_11|stem|7a600d9f72fdbdfb|a207cf06c416ecb8|226da896ed74995d|-1140776009||t20606.7182401482s|s8744b|8744|qs|local|vector|||0.05||
+pred_12|stem|aed423513efe8cb9|26d097d3d8a27cdf|ae5ccac437437e09|1953116883||t20606.7182408832s|s9610b|9610|qs|local|vector|||0.01||
+pred_13|stem|612d42ef0131ebf5|793063d45ea00185|d96ffca9f67c06f5|-1987590898||t20606.7182415606s|s8494b|8494|qs|local|vector|||0.02||
+pred_1|stem|c0557c9be3dd4539|b422ecaafe38d8ee|77c80aca6d6c9959|-1520071039||t20606.7182420646s|s11289b|11289|qs|local|vector|||0.01||
+pred_4|stem|88cabc7abddd2d0f|3c7766f1217c9fcc|a40b43999b8f25b1|2046245167||t20606.7182433389s|s13850b|13850|qs|local|vector|||0.01||
+pred_8|stem|03a6269edd7b45be|f4cf33994cde1866|221551561b641aac|-1816148022||t20606.7182455136s|s9908b|9908|qs|local|vector|||0.02||
+pred_9|stem|e85c3e03f4f6de43|f4df32d24b117a67|520823f62bd2f05c|1113328764||t20606.718246286s|s8659b|8659|qs|local|vector|||0.01||
+mtrcs_10|stem|eac54706d3313fc0|01a61db6e1e44782|79ca19db476f53ba|-881707474||t20606.7182513933s|s311b|311|qs|local|vector|||0.02||
+mtrcs_11|stem|74b2041f3fb7a015|7ddec47cf6277832|023e5a49b3b8c92d|-1499579899||t20606.7182515862s|s311b|311|qs|local|vector|||0||
+mtrcs_12|stem|e83ad34d0a828cde|a8fb3ea576a6d786|0b15ba63854f35bb|-79008411||t20606.7182517557s|s312b|312|qs|local|vector|||0||
+mtrcs_13|stem|f59eff5f100a90f2|7301f0ea0db094ab|06ad2a9dba778143|-1993706465||t20606.71825195s|s314b|314|qs|local|vector|||0||
+mtrcs_1|stem|022022a98de82dbb|161c6c9457ebced5|a2496a6445138a1d|-1738955963||t20606.7182521417s|s311b|311|qs|local|vector|||0.02||
+mtrcs_4|stem|b68629326e6e3a64|fb23826d1283d329|34b5655da370faf0|-115263123||t20606.7182529482s|s309b|309|qs|local|vector|||0||
+mtrcs_8|stem|151e4ccc1b9c47a5|c45ae8fde7196309|bca970c5c2a77767|-871235471||t20606.7182537782s|s312b|312|qs|local|vector|||0.02||
+mtrcs_9|stem|075ad97bddd93924|68bfb60aedb1232f|af399d65052ec60e|-676998309||t20606.7182541062s|s310b|310|qs|local|vector|||0||
+mtrcs_svy_1|stem||714bc854d9b5ca38|d8adcbb32b858d67|453076484||t20606.7322494808s||0|qs|local|vector|||1.79|pacote 'themis' foi compilado no R versão 4.5.3. pacote 'pROC' foi compilado no R versão 4.5.3|objeto 'pred' não encontrado
+pnadc_design|function|a1393945641cb27e
+full_design|stem|abe04c4fedc1f091|fb3a971075689186|441d6b932529551d|-1418474883||t20606.7538874731s|s16079843b|16079843|qs|local|vector|||0.5||
+train_design|stem|82e442370184bacf|82e512b91510631f|5f26b57aa4d28311|-1594634017||t20606.7538929848s|s12176807b|12176807|qs|local|vector|||0.3||
+rec_svy_10|stem|3c2865363ce7bb04|4f5c93dc1a5e135e|7e19da53d3309180|-686746868||t20606.754758987s|s12688b|12688|qs|local|vector|||0||
+rec_svy_11|stem|4717e80380f10d0e|6551f0e88cc0568f|7e19da53d3309180|1260865669||t20606.7547597471s|s12977b|12977|qs|local|vector|||0||
+rec_svy_12|stem|8872ae1238b66373|592989be524d20ea|7e19da53d3309180|1745594153||t20606.7547606075s|s13510b|13510|qs|local|vector|||0.02||
+rec_svy_13|stem|cf133e6268b75dda|7c26237f10014188|7e19da53d3309180|1790949147||t20606.754761479s|s12661b|12661|qs|local|vector|||0.01||
+rec_svy_1|stem|4fb293a44277f7d3|34c7bbc5f41014a1|7e19da53d3309180|681521399||t20606.7547643543s|s15401b|15401|qs|local|vector|||0||
+rec_svy_2|stem|4f30c38d12ee7a89|78ef761855be3813|7e19da53d3309180|-624626349||t20606.7547649146s|s18306b|18306|qs|local|vector|||0||
+rec_svy_3|stem|1f5aece5f11bf694|4f83533cdfe73fc6|7e19da53d3309180|-1804907017||t20606.7547654989s|s18378b|18378|qs|local|vector|||0.02||
+rec_svy_4|stem|f76e9019459283c3|71f2ac068a19aad7|7e19da53d3309180|1239238259||t20606.7547661527s|s18923b|18923|qs|local|vector|||0||
+rec_svy_5|stem|298acfa10ec91117|9f1ee39f5468a133|7e19da53d3309180|-2119864996||t20606.7547667256s|s21044b|21044|qs|local|vector|||0||
+rec_svy_6|stem|4871602d28968c02|dc9e03afa16fa817|7e19da53d3309180|-1454720120||t20606.7547672527s|s19710b|19710|qs|local|vector|||0||
+rec_svy_7|stem|747964960c125b9b|d89a1053d1b3bc90|7e19da53d3309180|-1964754957||t20606.7547677033s|s19361b|19361|qs|local|vector|||0||
+rec_svy_8|stem|120120f969609639|2d34823316cbcb77|7e19da53d3309180|-507598026||t20606.7547682113s|s13567b|13567|qs|local|vector|||0.01||
+rec_svy_9|stem|40c2d511243f824b|634195ee8bda7cd4|7e19da53d3309180|-1468755075||t20606.7547687202s|s12342b|12342|qs|local|vector|||0||
+mdl_svy_10|stem||13faf1f9c3459474|69731a6aea90a1dd|747740831||t20606.7326801407s||0|qs|local|vector|||0.25||método não aplicável para 'svyglm' aplicado a um objeto de classe 'c('tbl_df', 'tbl', 'data.frame')'
+cadunico|stem|36add70abfc5ec16|d269e1fb52b9851e|15b85e5f553ff712|-1520812393||t20606.7580679367s|s891472b|891472|qs|local|vector|||2.28|pacote 'themis' foi compilado no R versão 4.5.3. pacote 'pROC' foi compilado no R versão 4.5.3|
+rec_2|stem|3cd4f570ba4117f1|60a14714de83470e|d122bfb1229a2488|1111779072||t20606.7584935062s|s18607b|18607|qs|local|vector|||0||
+rec_3|stem|3f0ad985adbb3342|60a14714de83470e|d122bfb1229a2488|-282282214||t20606.7584942248s|s18608b|18608|qs|local|vector|||0||
+mdl_2|stem|9f7f3e604c04f15e|16ad5d125d8d95ad|ae3904def3f77871|1965775345||t20606.7585008382s|s914497b|914497|qs|local|vector|||0.31|glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu|
+mdl_3|stem|f4e889ac364cd993|5e96543480f92147|f6278e9127f4239c|808858869||t20606.7585030887s|s914499b|914499|qs|local|vector|||0.14|glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu|
+pred_2|stem|88cabc7abddd2d0f|fc25dad5c4a6bb23|cc0d783cb05a9a27|647928582||t20606.7585126287s|s13850b|13850|qs|local|vector|||0.02||
+pred_3|stem|88cabc7abddd2d0f|e31dd675a05379d6|1d9d2c03836aefe4|-2017872685||t20606.7585130666s|s13850b|13850|qs|local|vector|||0||
+mtrcs_2|stem|6b5d42d3b5a64a69|93ee9e584ca8004a|793a40a8eedee0d8|1104975977||t20606.7585197785s|s309b|309|qs|local|vector|||0.04||
+mtrcs_3|stem|6f2012596ebd2dae|d57d426082a139bb|584f9cd1e3536e52|-223942003||t20606.7585201415s|s309b|309|qs|local|vector|||0||
+rec_5|stem|8cf20bd3f598faf6|d34abaf57dfd53e0|d122bfb1229a2488|1663202434||t20606.7589665892s|s19105b|19105|qs|local|vector|||0||
+rec_6|stem|b49a7e27e31795d1|e860a07b0d500407|d122bfb1229a2488|1426436205||t20606.7589674243s|s18068b|18068|qs|local|vector|||0.01||
+rec_7|stem|3fad573e00cd51cc|433da52443f100e8|d122bfb1229a2488|-1312787823||t20606.7589685219s|s19252b|19252|qs|local|vector|||0.01||
+mdl_5|stem|625ae9affa5a2b10|420c9627e1a2c54a|6c86c35b5ce7e653|-1925875140||t20606.7589732873s|s1162573b|1162573|qs|local|vector|||0.33|glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu|
+mdl_6|stem|147bef60d4102f62|438f13c667e1a86e|443ac36998e1f628|-418088289||t20606.7589774613s|s1293782b|1293782|qs|local|vector|||0.29|glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu|
+mdl_7|stem|cedc03498c5c5a4b|3c425c72bb015471|b7ca65a8153e9fca|1994776246||t20606.7589801534s|s1726675b|1726675|qs|local|vector|||0.17|glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu|
+pred_5|stem|522040b22d395f24|d6afe50f82dd9028|85a91803367d27a4|-793211706||t20606.7589806935s|s14649b|14649|qs|local|vector|||0||
+pred_6|stem|632add35c19d143c|0fb301535a997822|fe59d7398921a6ea|-147592902||t20606.7589813565s|s15218b|15218|qs|local|vector|||0.01||
+pred_7|stem|3defe661208d6108|7ca94af9e32de3c6|7adefc7f0679c283|559132148||t20606.7589820834s|s15933b|15933|qs|local|vector|||0.02||
+lista_modelos|stem|03a463c068012635|e8fe93f41459c985|1d43dfc597afd56a|-972267604||t20606.7589864029s|s11230469b|11230469|qs|local|vector|||0||
+mtrcs_5|stem|201778020c4738ba|cf3cf539241632e3|4922e4bf53e22ae6|-1292866509||t20606.7589871202s|s314b|314|qs|local|vector|||0.03||
+mtrcs_6|stem|e84c55b4b2e27f00|fdefa51f7ccc3f73|120d7bf4a40bb8da|373427227||t20606.7589874943s|s308b|308|qs|local|vector|||0||
+mtrcs_7|stem|e315e3bb0f021732|52b27d30601b83cb|5d4cfce02a16bf8a|1789111020||t20606.7589878343s|s308b|308|qs|local|vector|||0.02||
+preds_cadunico|stem|c17d55ad78a2a9c1|5474589815b0f77a|2ce1f1d0211f34a1|1444126921||t20606.7590146357s|s14725740b|14725740|qs|local|vector|||1.78||
+metrics_nova|stem|7c25d4ffd31f886f|3e396a48b83e9e15|5446997bcd1edbbf|815518497||t20606.7590151468s|s777b|777|qs|local|vector|||0||
+resumo_cadunico|stem|cd198ce1823a3e3b|fc17b5bca7f685bc|9b6f28b722403cef|-548684759||t20606.7590192282s|s407b|407|qs|local|vector|||0||
+get_cortes_decil_810|function|e0786d1becace242
+predict_lasso|function|78b136f250b48c84
+apply_faixa_decil_ebia|function|d1470a7dff776236
+make_decis_condicional|function|19c552508acd1c07
+svy_cols|function|c13ac76751d0c8ac
+compute_metrics|function|8a8f107583e2a3ca
+get_cortes_quartil_810|function|ebeedf0ff3186133
+get_cortes_decil_ebia|function|c40d18b38a8be2f9
+make_faixa_renda_decil_810|function|56c2e04e01fd289f
+fit_1_1|function|8956a14e9d337a0a
+fit_1_2|function|bf5bb096583de85f
+compile_metrics|function|23a0f135b2084d54
+fit_1_3|function|0f13439048f69b70
+formula_1|object|4ca6abe4a3eaaac9
+fit_1_4|function|8360defe66971243
+add_smote|function|5ef52075613f209b
+formula_2|object|9b9af6c054726880
+fit_2_1|function|55c6cbe8ec6b79a3
+formula_3|object|9b9af6c054726880
+fit_2_2|function|155c7d5b016446ad
+formula_4|object|9b9af6c054726880
+formula_5|object|238a471fd038f83d
+formula_6|object|3ef12c081a2daf30
+fit_3_1|function|dc039223e739d62f
+formula_7|object|45d2efe5193111ad
+apply_faixa_decil_810|function|08bea1a535f04571
+fit_3_2|function|d28733f1ab9f7bb1
+formula_8|object|78a46391586afdae
+fit_3_3|function|09524831ef6c455b
+receita_design|function|c8d0e78d127f2a64
+formula_9|object|828306eac4645b41
+fit_3_4|function|11df6e15a69688db
+fit_3_5|function|b77d3e9677ba07e6
+fit_4_1|function|71f5be556bbf57a1
+make_faixa_renda_quartil_810|function|be7fb081ae8d7763
+fit_4_2|function|8b514c6c453dc038
+make_faixa_renda_decil_ebia|function|5aea61f6022a102e
+resume_cadunico|function|21e553e7cb4fd854
+cut_renda_1|function|d987901aec8df8cc
+cut_renda_2|function|e17ecfc1f1dd9e1a
+cut_renda_3|function|f80501730e9e11e5
+cut_renda_4|function|157111b729bbbaf3
+cut_renda_5|function|a8c5b8729db8a0c8
+cut_renda_6|function|cd6d5a48354d2a40
+prediz_cadunico|function|ad02d0112f975011
+adiciona_cadunico|function|605782ec041fa18f
+formula_10|object|7e00f97f27712d8a
+formula_11|object|2cd03bb75d8d1366
+formula_12|object|5af6daf556c256e4
+receita|function|c8d0e78d127f2a64
+predict_tidymodels|function|0bb2e417932645b5
+formula_13|object|9b252566260f192e
+apply_faixa_quartil_810|function|ebfc9dc0942c1c80
+predict_svyglm|function|652395c72d406cf3
+modelos_tbl|object|65b8757dc88adcc9
+fit_svyglm|function|de7eb7aa56658667
+make_smote_data|function|1ba7e4bebe0410a4
+adiciona_ebia|function|0e7da32e38012ecb
+predict_random_forest|function|0cf64c227e86c52e
+fit_glm|function|450cab9814b90df9
+get_data|function|a1ab09a802aa8a77
+extend_with_svy|function|c7dbe99f4d43746b
+fit_3_7|function|6cebaff5156beaab
+fit_3_6|function|c889529e181f7b8d
+fit_3_8|function|a0f8802ae3c45176
+carrega_cadunico2|function|cbf9cd8827683c9a
+modify_data|function|9fcdc0d1dde7787d
+carrega_cadunico|function|d066f0c707fe6e42
+cadunico2|stem|235b83eefe8cf5c9|322b01b777f432fc|d08d9d10a6359dce|1733172960||t20606.7623704585s|s905675b|905675|qs|local|vector|||2.27|pacote 'themis' foi compilado no R versão 4.5.3. pacote 'pROC' foi compilado no R versão 4.5.3|
+preds_cadunico2|stem|91d2756c8ccf2c03|d327e8c452e898c0|570b2d53e5127387|-859859628||t20606.7624019555s|s14909969b|14909969|qs|local|vector|||2||
+resumo_cadunico2|stem|80b5f2b43339500d|d75bf0ca6c12cc46|6046204aa93d27a1|1077031617||t20606.7624085175s|s407b|407|qs|local|vector|||0||
