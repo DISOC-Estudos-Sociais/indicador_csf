@@ -32,7 +32,7 @@ cut_renda_2 <- function(x) {
   )
 }
 
-# corte 3: não lembro como foi calculado
+# corte 3: faixas do informe
 cut_renda_3 <- function(x) {
   dplyr::case_when(
     x <  218 ~ "de 0 a 218",
