@@ -21,6 +21,23 @@ formula_14 <- ebia_grave ~ faixa_renda_7+V2007+raca+flag_06+educ+V1022+agricultu
 formula_15 <- ebia_grave ~ faixa_renda_8+V2007+raca+flag_06+educ+V1022+agricultura_familiar+regiao_metro
 formula_16 <- ebia_grave ~ faixa_renda_9+V2007+raca+flag_06+educ+V1022+agricultura_familiar+regiao_metro
 
+formula_17 <- ebia_grave ~ faixa_renda_2
+formula_18 <- ebia_grave ~ faixa_renda_2+V2007+raca+flag_06+educ
+formula_19 <- ebia_grave ~ faixa_renda_2+V2007+raca+flag_06+educ+V1022+agricultura_familiar
+formula_20 <- ebia_grave ~ faixa_renda_2+V2007+raca+flag_06+educ+V1022+agricultura_familiar+regiao_metro+Estrato
+
+formula_21 <- ebia_grave ~ faixa_renda_3
+formula_22 <- ebia_grave ~ faixa_renda_3+V2007+raca+flag_06+educ
+formula_23 <- ebia_grave ~ faixa_renda_3+V2007+raca+flag_06+educ+V1022+agricultura_familiar
+formula_24 <- ebia_grave ~ faixa_renda_3+V2007+raca+flag_06+educ+V1022+agricultura_familiar+regiao_metro+Estrato
+
+formula_25 <- ebia_grave ~ faixa_renda_6
+formula_26 <- ebia_grave ~ faixa_renda_6+V2007+raca+flag_06+educ
+formula_27 <- ebia_grave ~ faixa_renda_6+V2007+raca+flag_06+educ+V1022+agricultura_familiar
+formula_28 <- ebia_grave ~ faixa_renda_6+V2007+raca+flag_06+educ+V1022+agricultura_familiar+regiao_metro+Estrato
+
+
+
 # -----------------------------------------------------------------------------
 # 2. COLUNAS DE DESIGN AMOSTRAL
 # -----------------------------------------------------------------------------
