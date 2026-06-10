@@ -135,6 +135,39 @@ cut_renda_9 <- function(y, x) {
   )
 }
 
+# corte 10:
+cut_renda_10 <- function(x) {
+  dplyr::case_when(
+    x <  109 ~ "de 0 a 109",
+    x <  218 ~ "de 109 a 218",
+    x <  380 ~ "de 218 a 380",
+    x <  759 ~ "de 380 a 759",
+    TRUE ~ "Acima de 759"
+  )
+}
+
+# corte 11:
+cut_renda_11 <- function(x) {
+  dplyr::case_when(
+    x <  218 ~ "de 0 a 218",
+    x <  232 ~ "de 218 a 232",
+    x <  393 ~ "de 232 a 393",
+    x <  738 ~ "de 393 a 738",
+    TRUE ~ "Acima de 738",
+  )
+}
+
+# corte 12:
+cut_renda_12 <- function(x) {
+  dplyr::case_when(
+    x <  218 ~ "de 0 a 218",
+    x <  280 ~ "de 218 a 280",
+    x <  391 ~ "de 280 a 391",
+    x <  774 ~ "de 391 a 774",
+    TRUE ~ "Acima de 774",
+  )
+}
+
 # -----------------------------
 # 2. DECIS DE RENDA CONDICIONADOS POR GRUPO (E.G. REGIÃO METROPOLITANA/INTERIOR)
 # -----------------------------

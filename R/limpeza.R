@@ -71,6 +71,9 @@ modify_data <- function(raw_data) {
     faixa_renda_7 = cut_renda_7(VDI5008),
     faixa_renda_8 = cut_renda_8(VDI5008),
     faixa_renda_9 = cut_renda_9(regiao_metro, VDI5008),
+    faixa_renda_10 = cut_renda_10(VDI5008),
+    faixa_renda_11 = cut_renda_11(VDI5008),
+    faixa_renda_12 = cut_renda_12(VDI5008),
     
     # Faixa de escolaridade
     educ = dplyr::case_when(
@@ -138,6 +141,9 @@ modify_data <- function(raw_data) {
     faixa_renda_7 = relevel(factor(faixa_renda_7), ref = "de 0 a 201"),
     faixa_renda_8 = relevel(factor(faixa_renda_8), ref = "sem renda"),
     faixa_renda_9 = relevel(factor(faixa_renda_9), ref = "D1"),
+    faixa_renda_10 = relevel(factor(faixa_renda_10), ref = "de 0 a 109"),
+    faixa_renda_11 = relevel(factor(faixa_renda_11), ref = "de 0 a 218"),
+    faixa_renda_12 = relevel(factor(faixa_renda_12), ref = "de 0 a 218"),
     regiao_metro = factor(regiao_metro, labels = c("Interior", "RMF")),
     ) |>
     dplyr::filter(V2005 == "01") |> 
@@ -177,6 +183,9 @@ carrega_cadunico <- function(){
       faixa_renda_7 = factor(cut_renda_7(renda0)),
       faixa_renda_8 = factor(cut_renda_8(renda0)),
       faixa_renda_9 = factor(cut_renda_9(regiao_metro, renda0)),
+      faixa_renda_10 = factor(cut_renda_10(renda0)),
+      faixa_renda_11 = factor(cut_renda_11(renda0)),
+      faixa_renda_12 = factor(cut_renda_12(renda0)),
       # faixa_renda_1 = factor(cut_renda_1(renda1)),
       # faixa_renda_2 = factor(cut_renda_2(renda2)),
       # faixa_renda_3 = factor(cut_renda_3(renda3)),
@@ -226,6 +235,9 @@ carrega_cadunico2 <- function(){
       faixa_renda_7 = factor(cut_renda_7(renda1)),
       faixa_renda_8 = factor(cut_renda_8(renda1)),
       faixa_renda_9 = factor(cut_renda_9(regiao_metro, renda1)),
+      faixa_renda_10 = factor(cut_renda_10(renda1)),
+      faixa_renda_11 = factor(cut_renda_11(renda1)),
+      faixa_renda_12 = factor(cut_renda_12(renda1)),
       agricultura_familiar = factor(dplyr::if_else(agric_fam == 1, TRUE, FALSE)),
       V1022 = factor(dplyr::if_else(rural == 1, 2, 1), levels = c(1,2)),
       Estrato = factor(dplyr::case_when(

@@ -20,13 +20,14 @@ purrr::walk(list.files("R", full.names = TRUE, recursive = TRUE), source)
 # TABELA DE VARIAÇÃO: uma linha por modelo
 # =============================================================================
 modelos_tbl <- tibble::tibble(
-  id      = 1:28,
+  id      = 1:31,
   formula = list(formula_1, formula_2, formula_3, formula_4, formula_5,
                  formula_6, formula_7, formula_8, formula_9, formula_10,
                  formula_11, formula_12, formula_13, formula_14, formula_15,
                  formula_16, formula_17, formula_18, formula_19, formula_20,
                  formula_21, formula_22, formula_23, formula_24, formula_25,
-                 formula_26, formula_27, formula_28)
+                 formula_26, formula_27, formula_28, formula_29, formula_30,
+                 formula_31)
 )
 
 # =============================================================================
@@ -76,7 +77,8 @@ list(
       mtrcs_11, mtrcs_12, mtrcs_13, mtrcs_14, mtrcs_15,
       mtrcs_16, mtrcs_17, mtrcs_18, mtrcs_19, mtrcs_20,
       mtrcs_21, mtrcs_22, mtrcs_23, mtrcs_24, mtrcs_25,
-      mtrcs_26, mtrcs_27, mtrcs_28
+      mtrcs_26, mtrcs_27, mtrcs_28, mtrcs_29, mtrcs_30, 
+      mtrcs_31
     )
   ),
   
@@ -94,7 +96,8 @@ list(
          mdl_19 = mdl_19, mdl_20 = mdl_20, mdl_21 = mdl_21,
          mdl_22 = mdl_22, mdl_23 = mdl_23, mdl_24 = mdl_24,
          mdl_25 = mdl_25, mdl_26 = mdl_26, mdl_27 = mdl_27,
-         mdl_28 = mdl_28)
+         mdl_28 = mdl_28, mdl_29 = mdl_29, mdl_30 = mdl_30,
+         mdl_31 = mdl_31)
   ),
   
   tar_target(preds_cadunico,  purrr::map(lista_modelos, prediz_cadunico, cadunico = cadunico)),
