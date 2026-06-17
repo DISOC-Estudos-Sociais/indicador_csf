@@ -1,0 +1,106 @@
+---
+title: "INSAN Grave no Ceará"
+subtitle: "Modelos de previsão a partir de dados do CadÚnico"
+author: "J. Victor Batista — Assessor Técnico | DISOC – IPECE"
+date: today
+date-format: "MMMM [de] YYYY"
+lang: pt-BR
+
+format:
+  revealjs:
+    theme: default
+    slide-number: true
+    progress: true
+    footer: "DISOC – IPECE | INSAN Grave no Ceará"
+    transition: slide
+    background-transition: fade
+    highlight-style: github
+    code-line-numbers: true
+    fig-align: center
+    width: 1280
+    height: 720
+    margin: 0.08
+    center: false
+    incremental: false
+    embed-resources: true
+---
+
+# Objetivo
+
+Qual é o tamanho do impacto do Cartão Ceará Sem Fome na **probabilidade** dos beneficiários estarem em Insegurança Alimentar e Nutricional Grave?
+
+# Fundamentação: CADINSAN, do MDS
+
+------------------------------------------------------------------------
+
+![ Resultados do CadInsan com e sem benefícios sociais](C:/Users/victo/git/indicador_csf/outputs/tabela_cenario.gif){width="68%" fig-align="center"}
+
+# Metodologia
+
+Treinar um modelo preditivo com dados da PNAD Contínua e aplicar os estimadores encontrados na população do CadÚnico beneficiada com o Cartão Ceará Sem Fome. O resultado será uma previsão do domicílio com aquelas características estar ou não em INSAN Grave.
+
+## Dados
+
+- PNAD Contínua 2024, 4º trimestre: Informações socioeconômicas e sobre a segurança alimentar dos domicílio. Utilizou-se somente informações do Ceará.
+
+- CadÚnico: Base com beneficiários do Cartão Ceará Sem Fome. A variável de renda é utilizada de duas formas: primeiro sem o valor do Cartão e depois com ele.
+
+# Variáveis utilizadas
+
+------------------------------------------------------------------------
+
+| Indicador | Variável na PNAD Contínua 2024 |
+|------------------------------------|------------------------------------|
+| Renda domiciliar per capita | elaborada a partir da variável VDI5008 |
+| Sexo da pessoa de referência | V2007 |
+| Cor/raça da pessoa de referência | V2010 |
+| Presença de pessoa menor de 6 anos | elaborada a partir da variável V2009 |
+| Nível educacional da pessoa de referência | elaborada a partir da variável VD3004 |
+
+
+: Tabela 1: Indicadores utilizados como variáveis independentes no modelo
+
+------------------------------------------------------------------------
+
+| Indicador | Variável na PNAD Contínua 2024 |
+|------------------------------------|------------------------------------|
+| Situação do domicílio (urbano/rural) | V1022 |
+| Presença de trabalhador da agricultura familiar | elaborada a partir da variável VD4007 |
+| Dummy de região metropolitana | elaborada a partir da variável Estrato |
+
+: Tabela 1: Indicadores utilizados como variáveis independentes no modelo
+
+# Resultados
+
+------------------------------------------------------------------------
+
+![Resultados do Cartão CSF](C:/Users/victo/git/indicador_csf/outputs/tabela_cartao_csf.gif){width="68%" fig-align="center"}
+
+# Principais conclusões
+
+Os melhores modelos encontrados a partir das variáveis selecionadas, que possuem sensibilidade acima de 50%, identificam que entre 12% e 27% dos domicílios beneficiados podem ter saído da situação de insegurança alimentar grave. 
+
+## Limitações
+
+Os números apresentados são uma medição da probabilidade de Insan, por isso devem ser interpretados com cautela. O presente trabalho é um exercício estatístico a partir de dados administrativos do IBGE e do CadÚnico e tem muito a ganhar caso haja um acompanhamento e coleta primária de dados com os próprios beneficiários do Cartão CSF.
+
+## Próximos passos
+
+Outros exercícios podem ser realizados, como calcular diferentes valores para o cartão e ver como eles alteram a probabilidade de Insan grave.
+
+------------------------------------------------------------------------
+
+## Referências
+
+BRASIL, Ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome. **CADINSAN**: indicador de risco de insegurança alimentar municipal a partir dos dados do cadunico. Brasilía, 2025. Disponível em https://www.gov.br/mds/pt-br/Sisan/monitoramento-da-san/Relatorio_CadINSAN.pdf Acesso em jan/2026.
+
+------------------------------------------------------------------------
+
+::: {style="text-align: center; margin-top: 200px;"}
+### Obrigado
+
+**João Victor Batista Lopes**\
+Assessor Técnico \| DISOC – IPECE
+
+*Dados abertos · Código aberto · Ciência reprodutível*
+:::
