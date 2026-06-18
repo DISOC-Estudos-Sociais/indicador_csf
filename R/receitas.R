@@ -40,6 +40,8 @@ formula_29 <- ebia_grave ~ faixa_renda_10+V2007+raca+flag_06+educ+V1022+agricult
 formula_30 <- ebia_grave ~ faixa_renda_11+V2007+raca+flag_06+educ+V1022+agricultura_familiar+regiao_metro
 formula_31 <- ebia_grave ~ faixa_renda_12+V2007+raca+flag_06+educ+V1022+agricultura_familiar+regiao_metro
 
+formula_32 <- ebia_grave ~ faixa_renda_13+V2007+raca+flag_06+educ+V1022+agricultura_familiar+regiao_metro
+formula_33 <- ebia_grave ~ faixa_renda_13+V2007+raca+flag_06+V1022+agricultura_familiar+regiao_metro
 
 
 
